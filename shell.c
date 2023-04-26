@@ -11,13 +11,13 @@ int main(int ac, char **av)
 
 	while (1)
 	{
-		char *prompt = "$";
+		char *prompt = "$ ";
 		char *lineptr = NULL;
 		size_t n;
 		ssize_t nchar = 0;
 
 		(void)ac;
-		write(1, prompt, 5);
+		write(1, prompt, 2);
 	/*read command from stdin*/
 		nchar = getline(&lineptr, &n, stdin);
 		if (nchar == 1)
