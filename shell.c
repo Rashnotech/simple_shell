@@ -20,7 +20,7 @@ int main(int ac, char **av)
 		write(1, prompt, 2);
 	/*read command from stdin*/
 		nchar = getline(&lineptr, &n, stdin);
-		if (nchar == 1)
+		if (nchar == 2 || lineptr[0] == ' ')
 		{
 			free(lineptr);
 			continue;
@@ -28,7 +28,7 @@ int main(int ac, char **av)
 /*tokenize string into individual commands*/
 		av = command_tokenizer(lineptr, &av, nchar);
 
-		if (check(av[0], av[1], av[2]) == 0)
+		if (check(av) == 0)
 		{
 			free(lineptr);
 			continue;
@@ -48,23 +48,23 @@ int main(int ac, char **av)
  * Return: 0 on success 1 on failure
  */
 
-int check(char *arg0, char *arg1, char *arg2)
+int check(char **argv)
 {
-	if (_strcmp(arg0, "exit") == 0)
+	if (_strcmp(argv[0], "exit") == 0)
 		exit(98);
-	else if (_strcmp(arg0, "env") == 0)
+	else if (_strcmp(argv[0], "env") == 0)
 	{
 		get_environ_var();
 		return (0);
 	}
-	else if (_strcmp(arg0, "setenv") == 0)
+	else if (_strcmp(argv[0], "setenv") == 0)
 	{
-		_setenv(arg1, arg2);
+		_setenv(argv[1], argv[2]);
 		return (0);
 	}
-	if (_strcmp(arg0, "unsetenv") == 0)
+	if (_strcmp(argv[0], "unsetenv") == 0)
 	{
-		_unsetenv(arg1);
+		_unsetenv(argv[1]);
 		return (0);
 	}
 

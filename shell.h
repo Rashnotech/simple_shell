@@ -27,7 +27,7 @@ char *_strdup(const char *str);
 char *_memcpy(char *dest, char *src, unsigned int i);
 int _strcmp(const char *str1, const char *str2);
 char *_strcat(char *dest, char *src);
-
+int _strncmp(const char *s1, const char *s2, size_t n);
 
 /***HANDLE ERROR***/
 void _puterror(char *name, char *cmd);
@@ -37,6 +37,6 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 
 void freearray(char **av);
 
-int check(char *arg0, char *arg1, char *arg2);
+int check(char **argv);
 int _unsetenv(char *var_name);
 #endif
