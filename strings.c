@@ -93,7 +93,6 @@ char *_strcat(char *dest, char *src)
 
 	if (dest == NULL)
 	{
-		printf("nullllll");
 		return (NULL);
 	}
 	while (*dest != '\0')

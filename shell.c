@@ -7,13 +7,14 @@
  */
 int main(int ac, char **av)
 {
+	char *name = av[0];
+
 	while (1)
 	{
-	char *name = av[0];
-	char *prompt = "($) ";
-	char *lineptr = NULL;
-	size_t n;
-	ssize_t nchar = 0;
+		char *prompt = "$";
+		char *lineptr = NULL;
+		size_t n;
+		ssize_t nchar = 0;
 
 		(void)ac;
 		write(1, prompt, 5);
