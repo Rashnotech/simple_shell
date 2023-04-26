@@ -22,7 +22,7 @@ int _setenv(char *var_name, char *value)
 
 	while (*env != NULL)
 	{
-		if (_strncmp(*env, var_name, _strlen(var_name)) == 0)
+		if (strncmp(*env, var_name, _strlen(var_name)) == 0)
 		{
 			*env = var;
 			return (0);
