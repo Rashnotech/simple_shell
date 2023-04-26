@@ -20,7 +20,7 @@ int main(int ac, char **av)
 		write(1, prompt, 2);
 	/*read command from stdin*/
 		nchar = getline(&lineptr, &n, stdin);
-		if (nchar == 2 || lineptr[0] == ' ')
+		if (nchar == 1 || lineptr[0] == ' ')
 		{
 			free(lineptr);
 			continue;
