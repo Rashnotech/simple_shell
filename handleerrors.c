@@ -19,5 +19,5 @@ void _puterror(char *name, char *cmd)
 	_putchar(' ');
 	_puts("not found");
 	_putchar('\n');
-	
+
 }
