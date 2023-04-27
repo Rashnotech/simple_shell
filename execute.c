@@ -4,6 +4,7 @@
  * execute - for executing commands
  * @argv: array of commands and their arguments
  * @name: the name of the progamme
+ * Return: 0 or 1
  */
 
 int execute(char **argv, char *name)

@@ -11,4 +11,5 @@ void freearray(char **av)
 
 	for (; *av != NULL; av++)
 		free(*av);
+	free(av);
 }
