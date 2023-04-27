@@ -11,13 +11,13 @@ int main(int ac, char **av)
 
 	while (1)
 	{
-		char *prompt = "$ ";
+		char *prompt = "";
 		char *lineptr = NULL;
 		size_t n;
 		ssize_t nchar = 0;
 
 		(void)ac;
-		write(1, prompt, 2);
+		write(1, prompt, 0);
 	/*read command from stdin*/
 		nchar = getline(&lineptr, &n, stdin);
 		if (nchar == 1 || lineptr[0] == ' ')
@@ -42,10 +42,8 @@ int main(int ac, char **av)
 
 /**
  * check - check for speciall built-in commands
- * @arg0: the command enterd
- * @arg1: the first argument to the command
- * @arg2: the second argument to the comnand
- * Return: 0 on success 1 on failure
+ * @argv: the command enterd
+ * Return: 0
  */
 
 int check(char **argv)
