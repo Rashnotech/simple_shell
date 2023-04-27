@@ -15,7 +15,7 @@ char *getpath(char *cmd);
 void get_environ_var(void);
 char **command_tokenizer(char *command, char ***argv, ssize_t num_char);
 int _setenv(char *var_name, char *value);
-void execute(char **argv, char *name);
+int execute(char **argv, char *name);
 
 /***WRITERS AND STRING***/
 

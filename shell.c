@@ -8,6 +8,7 @@
 int main(int ac, char **av)
 {
 	char *name = av[0];
+	int exe = 0;
 
 	while (1)
 	{
@@ -20,6 +21,11 @@ int main(int ac, char **av)
 		write(1, prompt, 0);
 	/*read command from stdin*/
 		nchar = getline(&lineptr, &n, stdin);
+		if (nchar == -1)
+		{
+			free(lineptr);
+			break;
+		}
 		if (nchar == 1 || lineptr[0] == ' ')
 		{
 			free(lineptr);
@@ -33,11 +39,14 @@ int main(int ac, char **av)
 			free(lineptr);
 			continue;
 		}
-		execute(av, name);
+		exe = execute(av, name);
 		free(lineptr);
 		freearray(av);
 	}
-	return (0);
+	if (exe == 1)
+		exit(EXIT_FAILURE);
+	else
+	exit(EXIT_SUCCESS);
 }
 
 /**
@@ -49,7 +58,7 @@ int main(int ac, char **av)
 int check(char **argv)
 {
 	if (_strcmp(argv[0], "exit") == 0)
-		exit(98);
+		exit(EXIT_SUCCESS);
 	else if (_strcmp(argv[0], "env") == 0)
 	{
 		get_environ_var();
@@ -66,5 +75,5 @@ int check(char **argv)
 		return (0);
 	}
 
-	return (1);
+	return (-1);
 }

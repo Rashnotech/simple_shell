@@ -6,10 +6,10 @@
  * @name: the name of the progamme
  */
 
-void execute(char **argv, char *name)
+int execute(char **argv, char *name)
 {
 	char *fullpath;
-	int status = 1;
+	int status = 0;
 	pid_t my_pid;
 
 
@@ -24,14 +24,20 @@ void execute(char **argv, char *name)
 		}
 	}
 	else
+	{
 		_puterror(name, argv[0]);
+		write(2, "1", 1);
+		return (1);
+	}
 	my_pid = fork();
 	if (my_pid == -1)
 		perror("Error: ");
 	else if (my_pid == 0)
 	{
 		execve(argv[0], argv, environ);
+
 	}
 	else
-		wait(&status);
+		waitpid(my_pid, &status, 0);
+	return (0);
 }

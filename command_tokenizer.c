@@ -14,12 +14,12 @@ char **command_tokenizer(char *command, char ***argv, ssize_t num_chars)
 	char *delim = " \"\n";
 	int i, num_token = 0;
 
-	commandcopy = malloc(sizeof(char *) * num_chars);
+	commandcopy = malloc(sizeof(char) * (num_chars + 3));
 	if (commandcopy == NULL)
 	{
 		exit(-1);
 	}
-	strcpy(commandcopy, command);
+	_strcpy(commandcopy, command);
 	token = strtok(commandcopy, delim);
 	while (token != NULL)
 	{
@@ -35,7 +35,7 @@ char **command_tokenizer(char *command, char ***argv, ssize_t num_chars)
 	token = strtok(command, delim);
 	for (i = 0; token != NULL; i++)
 	{
-		(*argv)[i] = malloc(sizeof(char *) * strlen(token));
+		(*argv)[i] = malloc(sizeof(char) * (_strlen(token) + 1));
 		_strcpy((*argv)[i], token);
 		token = strtok(NULL, delim);
 	}
