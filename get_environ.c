@@ -14,7 +14,7 @@ void get_environ_var(void)
 		len = _strlen(environ[i]);
 
 		write(1, environ[i], len);
-		write(1, "\n", 1);
-		i++;
+		if (environ[++i] != NULL)
+			write(1, "\n", 1);
 	}
 }
