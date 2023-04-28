@@ -6,9 +6,19 @@
  * Return: void
  */
 
-void freearray(char **av)
+void freearray(char ***av)
 {
+	char **temp = *av;
 
-	for (; *av != NULL; av++)
-		free(*av);
+	if (temp == NULL)
+		return;
+
+
+	for (; *temp != NULL; temp++)
+	{
+		free(*temp);
+		*temp = NULL;
+	}
+	free(*av);
+	*av = NULL;
 }

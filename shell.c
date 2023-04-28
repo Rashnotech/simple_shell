@@ -41,7 +41,7 @@ int main(int ac, char **av)
 		}
 		exe = execute(av, name);
 		free(lineptr);
-		freearray(av);
+		freearray(&av);
 	}
 	if (exe == 1)
 		exit(EXIT_FAILURE);

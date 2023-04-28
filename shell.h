@@ -35,7 +35,7 @@ void _puterror(char *name, char *cmd);
 
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 
-void freearray(char **av);
+void freearray(char ***av);
 
 int check(char **argv);
 int _unsetenv(char *var_name);
