@@ -27,7 +27,6 @@ int my_strlen(const char *s)
 
 char *my_strdup(const char *str)
 {
-	int i;
 	char *dup_str;
 	size_t stringlen;
 

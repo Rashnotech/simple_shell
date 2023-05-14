@@ -16,7 +16,7 @@ int main(int argc, char **av)
 	{
 		char *input;
 		ssize_t no_char = 0;
-		int no_of_cmd;
+		int no_of_cmd = 0;
 
 		fd = print_prompt(argc, av);
 	/*read command from stdin*/
@@ -33,7 +33,7 @@ int main(int argc, char **av)
 			continue;
 		}
 	/*tokenize string into individual commands*/
-		no_of_cmd = tokenizer(input, &av, no_char);
+		tokenizer(input, &av, no_char);
 		if (in_built(av, input, no_of_cmd) == 0)
 			continue;
 		errorcode = command_execute(av, programe_name);
@@ -55,7 +55,7 @@ int main(int argc, char **av)
 
 int in_built(char **argv, char *lineptr, int argc)
 {
-	char *null = NULL;
+	(void)argc;
 
 	if (my_strcmp(argv[0], "exit") == 0)
 	{
@@ -136,5 +136,3 @@ char *get_input(int fd, ssize_t *no_char)
 
 	return (lineptr);
 }
-
-
