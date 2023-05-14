@@ -50,6 +50,7 @@ int main(int argc, char **av)
  * in_built - check for built-in commands
  * @argv: the command enterd
  * @lineptr: lineptr
+ * @argc: argument counter
  * Return: 0 on if command is a built in
  */
 
@@ -68,7 +69,6 @@ int in_built(char **argv, char *lineptr, int argc)
 		free(lineptr);
 		free_arrays(&argv);
 		exit(EXIT_SUCCESS);
-
 	}
 
 	else if (my_strcmp(argv[0], "env") == 0)
@@ -124,7 +124,6 @@ int print_prompt(int argc, char **argv)
  * @no_char: address of the no. of char read
  * Return: returns the string of input
  */
-
 char *get_input(int fd, ssize_t *no_char)
 {
 	char *lineptr = NULL;

@@ -13,8 +13,8 @@ void handle_error(char *name, char *cmd)
 	my_puts(name);
 	my_putchar(':');
 	my_putchar(' ');
-	my_putchar(':');
 	put_number(i);
+	my_putchar(':');
 	my_putchar(' ');
 	my_puts(cmd);
 	my_putchar(':');
