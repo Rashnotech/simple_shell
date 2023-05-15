@@ -12,6 +12,7 @@ int main(int argc, char **av)
 	int errorcode = 0;
 	int fd;
 
+	signal(SIGINT, signalHandle);
 	while (1)
 	{
 		char *input;
@@ -34,7 +35,7 @@ int main(int argc, char **av)
 		}
 	/*tokenize string into individual commands*/
 		tokenizer(input, &av, no_char);
-		if (in_built(av, input, no_of_cmd) == 0)
+		if (in_built(programe_name, av, input, no_of_cmd) == 0)
 			continue;
 		errorcode = command_execute(av, programe_name);
 		free(input);
@@ -48,24 +49,34 @@ int main(int argc, char **av)
 
 /**
  * in_built - check for built-in commands
+ * @programe_name: name of programe
  * @argv: the command enterd
  * @lineptr: lineptr
  * @argc: argument counter
  * Return: 0 on if command is a built in
  */
 
-int in_built(char **argv, char *lineptr, int argc)
+int in_built(char *name, char **argv, char *lineptr, int argc)
 {
+	int status;
 	(void)argc;
 
 	if (my_strcmp(argv[0], "exit") == 0)
 	{
-		/*if (argv[1] != NULL)
+		if (argv[1] != NULL)
 		{
+			status = _atoi(argv[1]);
+			if (status < 0)
+			{
+				handle_exit(name, argv[0], status);
+				return (0);
+			}
+			else
+				status %= 256;
 			free(lineptr);
 			free_arrays(&argv);
-			exit((int)argv[1]);
-		}*/
+			exit(status);
+		}
 		free(lineptr);
 		free_arrays(&argv);
 		exit(EXIT_SUCCESS);

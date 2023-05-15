@@ -5,6 +5,7 @@
 #include <limits.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <signal.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -28,7 +29,7 @@ int _setenv(const char *name, const char *value, int overwrite);
 int print_prompt(int argc, char **argv);
 char *get_input(int fd, ssize_t *no_char);
 char *_getenv(const char *name);
-
+int _atoi(const char *s);
 
 	/***WRITERS***/
 
@@ -46,9 +47,10 @@ int my_strcmp(const char *str1, const char *str2);
 char *my_strcat(char *dest, char *src);
 int my_strncmp(const char *s1, const char *s2, size_t n);
 char *_strchr(char *str, char c);
+
 /***HANDLE ERROR***/
 void handle_error(char *name, char *cmd);
-
+void handle_exit(char *name, char *cmd, int code);
 ssize_t _getline(char **lineptr, size_t *n, int fd);
 size_t _readline(char **lineptr, size_t *n, char buffer[], int fd, int size);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
@@ -56,8 +58,8 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_arrays(char ***av);
 
 
-int in_built(char **argv, char *lineptr, int argc);
+int in_built(char *name, char **argv, char *lineptr, int argc);
 void change_dir(char *dir);
 int my_unsetenv(char *var_name);
-
+void signalHandle(int signum);
 #endif

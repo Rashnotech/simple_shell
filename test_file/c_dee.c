@@ -119,3 +119,16 @@ char *_strchr(char *str, char c)
 	}
 	return (0);
 }
+
+/**
+ * signalHandler - handle ctrl c signal
+ * @signum: signal number
+ *
+ * Return: return an integer value
+ */
+void signalHandle(int signum)
+{
+	(void)signum;
+	signal(SIGINT, signalHandle);
+	fflush(stdout);
+}
