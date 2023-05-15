@@ -12,15 +12,15 @@ void change_dir(char *dir)
 	{
 		if (my_strcmp(dir, "-") == 0)
 		{
-			old_pwd = _getenv("OLDPWD");
-			path = _getenv("PWD");
+			old_pwd = my_getenv("OLDPWD");
+			path = my_getenv("PWD");
 			_setenv("PWD", old_pwd, 1);
 			chdir(old_pwd);
 			_setenv("OLDPWD", path, 1);
 		}
 		else
 		{
-			path = _getenv("PWD");
+			path = my_getenv("PWD");
 			retval = chdir(dir);
 			if (retval == 0)
 			{
@@ -33,7 +33,7 @@ void change_dir(char *dir)
 	}
 	else
 	{
-		path = _getenv("HOME");
+		path = my_getenv("HOME");
 		if (path == NULL)
 			perror("HOME not set");
 		_setenv("OLDPWD", getcwd(cwd, sizeof(cwd)), 1);
@@ -74,7 +74,6 @@ int _setenv(const char *name, const char *value, int overwrite)
 		free(new_env);
 		return (-1);
 	}
-	free(new_env);
 	return (0);
 }
 

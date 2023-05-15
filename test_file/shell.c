@@ -92,7 +92,13 @@ int in_built(char **argv, char *lineptr, int argc)
 		free_arrays(&argv);
 		return (0);
 	}
-
+	else if (my_strcmp(argv[0], "cd") == 0)
+	{
+		change_dir(argv[1]);
+		free(lineptr);
+		free_arrays(&argv);
+		return (0);
+	}
 	return (-1);
 }
 
