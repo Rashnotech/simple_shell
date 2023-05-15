@@ -53,8 +53,8 @@ size_t _readline(char **lineptr, size_t *n, char buffer[], int fd, int size)
 	while (1)
 	{
 		nchars = read(fd, buffer, size);
-		if (nchars == minus_one || nchars == 1)
-			return (1);
+		if (nchars == minus_one || nchars == 0)
+			return (-1);
 		else if (nchars == 0)
 			return (1);
 
