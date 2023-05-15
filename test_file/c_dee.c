@@ -131,4 +131,6 @@ void signalHandle(int signum)
 	(void)signum;
 	signal(SIGINT, signalHandle);
 	fflush(stdout);
+	my_putchar(10);
+	my_puts("$ ");
 }
