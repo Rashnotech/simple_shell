@@ -11,7 +11,7 @@ int main(int argc, char **av)
 	char *programe_name = av[0], *file = av[1];
 	int errorcode = 0, fd;
 
-	//signal(SIGINT, signalHandle);
+	signal(SIGINT, signalHandle);
 	if (argc > 1)
 		file_handler(file, programe_name, argc);
 	while (1)
