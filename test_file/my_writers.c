@@ -39,6 +39,11 @@ void my_puts(const char *str)
 
 int put_number(int i)
 {
+	if (i < 0)
+	{
+		my_putchar('-');
+		i = -i;
+	}
 	if (i < 10)
 	{
 		my_putchar(i + '0');

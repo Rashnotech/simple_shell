@@ -4,7 +4,6 @@
  * my_environ - get the enironment variebles
  * Return: void
  */
-
 void my_environ(void)
 {
 	unsigned int envlen, i = 0;
@@ -20,8 +19,6 @@ void my_environ(void)
 
 	}
 }
-
-#include "shell.h"
 
 /**
  * my_setenv - for seting the environ variable to the given value

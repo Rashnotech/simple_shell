@@ -1,12 +1,11 @@
 #include "shell.h"
-
 #define BUFF_SIZE 1024
 
 /**
  * _getline - reads an entire line from a stream
  * @lineptr: a pointer to the read line.
  * @n: size of lineptr
- * @stream: the stream to read from, e.g files or stdin.
+ * @fd: file descriptor
  * Return: the number of char read.
  */
 
@@ -25,7 +24,6 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
 		*lineptr = malloc((*n) * sizeof(char));
 		if (*lineptr == NULL)
 			return (1);
-		
 		for (i = 0; i < (*n); i++)
 			(*lineptr)[i] = '\0';
 	}
