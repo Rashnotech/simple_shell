@@ -28,13 +28,15 @@ int main(int argc, char **av)
 			my_putchar('\n');
 			break;
 		}
-		if (no_char == 1 || input[0] == ' ')
+		if (no_char == 1 || input == " ")
 		{
 			free(input);
 			continue;
 		}
 	/*tokenize string into individual commands*/
 		tokenizer(input, &av, no_char);
+		if (av[0] == NULL)
+			continue;
 		if (in_built(programe_name, av, input, no_of_cmd) == 0)
 			continue;
 		errorcode = command_execute(av, programe_name);
