@@ -26,7 +26,7 @@ char *my_getenv(char *var_name);
 void my_environ(void);
 int my_setenv(char *var_name, char *value);
 int _setenv(const char *name, const char *value, int overwrite);
-int print_prompt(int argc, char **argv);
+int print_prompt(int argc, char *file);
 char *get_input(int fd, ssize_t *no_char);
 char *_getenv(const char *name);
 int _atoi(const char *s);
@@ -48,11 +48,16 @@ char *my_strcat(char *dest, char *src);
 int my_strncmp(const char *s1, const char *s2, size_t n);
 char *_strchr(char *str, char c);
 
-/***HANDLE ERROR***/
+		/***HANDLE ERROR***/
+
 void handle_error(char *name, char *cmd);
 void handle_exit(char *name, char *cmd, int code);
+
 ssize_t _getline(char **lineptr, size_t *n, int fd);
 size_t _readline(char **lineptr, size_t *n, char buffer[], int fd, int size);
+char *_strtok(char *str, const char *delim);
+
+
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
 void free_arrays(char ***av);
@@ -60,6 +65,9 @@ void free_arrays(char ***av);
 
 int in_built(char *name, char **argv, char *lineptr, int argc);
 void change_dir(char *dir);
-int my_unsetenv(char *var_name);
 void signalHandle(int signum);
+
+void file_handler(char *file, char *programe_name, int argc);
+void normal_exit(int errorcode);
+
 #endif
