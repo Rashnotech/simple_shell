@@ -8,18 +8,19 @@
  */
 int main(int argc, char **av)
 {
-	char *programe_name = av[0];
-	int errorcode = 0;
-	int fd;
+	char *programe_name = av[0], *file = av[1];
+	int errorcode = 0, fd;
 
-	signal(SIGINT, signalHandle);
+	//signal(SIGINT, signalHandle);
+	if (argc > 1)
+		file_handler(file, programe_name, argc);
 	while (1)
 	{
 		char *input;
 		ssize_t no_char = 0;
 		int no_of_cmd = 0;
 
-		fd = print_prompt(argc, av);
+		fd = print_prompt(argc, file);
 	/*read command from stdin*/
 		input = get_input(fd, &no_char);
 		if (no_char == -1)
@@ -28,19 +29,22 @@ int main(int argc, char **av)
 			my_putchar('\n');
 			break;
 		}
-		if (no_char == 1 || input[0] == ' ')
+		if (no_char == 1 || input == " ")
 		{
 			free(input);
 			continue;
 		}
 	/*tokenize string into individual commands*/
 		tokenizer(input, &av, no_char);
-		if (in_built(programe_name, av, input, no_of_cmd) == 0)
+		if (av[0] == NULL)
+			continue;
+		if (in_built(programe_name, av, input,argc) == 0)
 			continue;
 		errorcode = command_execute(av, programe_name);
 		free(input);
 		free_arrays(&av);
 	}
+	normal_exit(errorcode);
 	if (errorcode == 1)
 		exit(EXIT_FAILURE);
 	else
@@ -85,28 +89,32 @@ int in_built(char *name, char **argv, char *lineptr, int argc)
 	else if (my_strcmp(argv[0], "env") == 0)
 	{
 		my_environ();
-		free(lineptr);
+		if (argc == 1)
+			free(lineptr);
 		free_arrays(&argv);
 		return (0);
 	}
 	else if (my_strcmp(argv[0], "setenv") == 0)
 	{
 		my_setenv(argv[1], argv[2]);
-		free(lineptr);
+		if (argc == 1)
+			free(lineptr);
 		free_arrays(&argv);
 		return (0);
 	}
 	else if (my_strcmp(argv[0], "unsetenv") == 0)
 	{
 		my_unsetenv(argv[1]);
-		free(lineptr);
+		if (argc == 1)
+			free(lineptr);
 		free_arrays(&argv);
 		return (0);
 	}
 	else if (my_strcmp(argv[0], "cd") == 0)
 	{
 		change_dir(argv[1]);
-		free(lineptr);
+		if (argc == 1)
+			free(lineptr);
 		free_arrays(&argv);
 		return (0);
 	}
@@ -120,17 +128,12 @@ int in_built(char *name, char **argv, char *lineptr, int argc)
  * Return: file discriptor
  */
 
-int print_prompt(int argc, char **argv)
+int print_prompt(int argc, char *file)
 {
 	int fd = STDIN_FILENO;
 
-	if (isatty(STDIN_FILENO))
+	if (isatty(STDIN_FILENO) && argc == 1)
 		write(1, "$ ", 2);
-	if (argc > 1)
-	{
-		fd = open(argv[1], O_RDONLY);
-		return (fd);
-	}
 
 	return (fd);
 }
@@ -147,7 +150,6 @@ char *get_input(int fd, ssize_t *no_char)
 	size_t n;
 /*	pid_t my_pid = getpid();*/
 
-	(void)fd;
 	*no_char = (_getline(&lineptr, &n, fd));
 
 	return (lineptr);
