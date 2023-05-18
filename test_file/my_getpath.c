@@ -18,6 +18,8 @@ char *my_getpath(char *cmd)
 		return (cmd);
 	}
 	paths_1 = my_getenv("PATH");
+	if (paths_1 == NULL)
+		return (NULL);
 	paths = my_strdup(paths_1);
 	token = strtok(paths, ":");
 

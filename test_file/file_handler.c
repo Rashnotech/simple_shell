@@ -3,13 +3,16 @@
 /**
  * file_handler - handles commands from file
  * @file: - the files that contains command
+ * @programe_name: the name of the shell
+ * @argc: the numbers of arguments
+ * Return: void
  */
 
 void file_handler(char *file, char *programe_name, int argc)
 {
 	char *token = NULL, *input, **argv;
 	int fd, errorcode;
-	size_t no_char;
+	ssize_t no_char;
 	
 
 	fd = open(file, O_RDONLY);
@@ -28,4 +31,3 @@ void file_handler(char *file, char *programe_name, int argc)
 	free(input);
 	normal_exit(errorcode);
 }
-

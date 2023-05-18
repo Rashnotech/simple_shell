@@ -31,7 +31,7 @@ void my_environ(void)
 int my_setenv(char *var_name, char *value)
 {
 	int i;
-	char var[1024];
+	char *var;
 	char **env_var = environ;
 	int len;
 
@@ -43,17 +43,12 @@ int my_setenv(char *var_name, char *value)
 			len = (my_strlen(var_name) + my_strlen(value) + 2);
 
 
-		/*var = malloc(sizeof(char) * len);
+		var = malloc(sizeof(char) * len);
 		if (var == NULL)
-			return (1);*/
+			return (1);
 
-		for (i = 0; i < 1024; i++)
+		for (i = 0; i < len; i++)
 			var[i] = '\0';
-		var[--len] = '\0';
-	/*printf("%d", len);
-	printf("%s %s", var_name, value);
-	printf("%lu", sizeof(var));*/
-
 
 		my_strcat(var, var_name);
 		my_strcat(var, "=");

@@ -10,17 +10,17 @@ void handle_error(char *name, char *cmd)
 {
 	static int i = 1;
 
-	my_puts(name);
-	my_putchar(':');
-	my_putchar(' ');
-	put_number(i);
-	my_putchar(':');
-	my_putchar(' ');
-	my_puts(cmd);
-	my_putchar(':');
-	my_putchar(' ');
-	my_puts("not found");
-	my_putchar('\n');
+	error_puts(name);
+	error_putchar(':');
+	error_putchar(' ');
+	errorput_number(i);
+	error_putchar(':');
+	error_putchar(' ');
+	error_puts(cmd);
+	error_putchar(':');
+	error_putchar(' ');
+	error_puts("not found");
+	error_putchar('\n');
 
 	i++;
 
