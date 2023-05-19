@@ -11,7 +11,7 @@ int main(int argc, char **av)
 	char *programe_name = av[0], *file = av[1];
 	int errorcode = 0, fd;
 
-	//signal(SIGINT, signalHandle);
+	signal(SIGINT, signalHandle);
 	if (argc > 1)
 		file_handler(file, programe_name, argc);
 	while (1)
@@ -29,7 +29,7 @@ int main(int argc, char **av)
 			my_putchar('\n');
 			break;
 		}
-		if (no_char == 1 || input == " ")
+		if (no_char == 1 || input == 0)
 		{
 			free(input);
 			continue;
@@ -131,7 +131,8 @@ int in_built(char *name, char **argv, char *lineptr, int argc)
 int print_prompt(int argc, char *file)
 {
 	int fd = STDIN_FILENO;
-
+	
+	(void)file;
 	if (isatty(STDIN_FILENO) && argc == 1)
 		write(1, "$ ", 2);
 
