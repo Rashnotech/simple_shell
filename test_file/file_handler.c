@@ -15,7 +15,14 @@ void file_handler(char *file, char *programe_name, int argc)
 	ssize_t no_char;
 	
 
-	fd = open(file, O_RDONLY);
+	if ((fd = open(file, O_RDONLY)) == -1)
+	{
+		error_puts(programe_name);
+		error_puts(": 0: cannot open ");
+		error_puts(file);
+		error_puts(": No such file\n");
+		exit(2);
+	}
 
 	input = get_input(fd, &no_char);
 	token = _strtok(input, "\n");
