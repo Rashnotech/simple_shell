@@ -25,7 +25,8 @@ int main(int argc, char **av)
 		if (no_char == -1)
 		{
 			free(input);
-			my_putchar('\n');
+			if (isatty(STDIN_FILENO))
+				my_putchar('\n');
 			break;
 		}
 		if (no_char == 1 || my_strcmp(input, " ") == 0)
@@ -143,7 +144,6 @@ char *get_input(int fd, ssize_t *no_char)
 {
 	char *lineptr = NULL;
 	size_t n;
-/*	pid_t my_pid = getpid();*/
 
 	*no_char = (_getline(&lineptr, &n, fd));
 
