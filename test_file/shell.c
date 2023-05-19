@@ -29,11 +29,7 @@ int main(int argc, char **av)
 				my_putchar('\n');
 			break;
 		}
-<<<<<<< HEAD
-		if (no_char == 1 || input == 0)
-=======
 		if (no_char == 1 || my_strcmp(input, " ") == 0)
->>>>>>> initech
 		{
 			free(input);
 			continue;
