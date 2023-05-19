@@ -144,6 +144,7 @@ char *get_input(int fd, ssize_t *no_char)
 	char *lineptr = NULL;
 	size_t n;
 
+
 	*no_char = (_getline(&lineptr, &n, fd));
 
 	return (lineptr);
