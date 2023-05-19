@@ -25,8 +25,7 @@ int main(int argc, char **av)
 		if (no_char == -1)
 		{
 			free(input);
-			if (isatty(STDIN_FILENO))
-				my_putchar('\n');
+			my_putchar('\n');
 			break;
 		}
 		if (no_char == 1 || my_strcmp(input, " ") == 0)
