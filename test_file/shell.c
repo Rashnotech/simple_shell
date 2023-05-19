@@ -128,7 +128,6 @@ int print_prompt(int argc)
 {
 	int fd = STDIN_FILENO;
 	
-	(void)file;
 	if (isatty(STDIN_FILENO) && argc == 1)
 		write(1, "$ ", 2);
 
