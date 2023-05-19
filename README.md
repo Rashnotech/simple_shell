@@ -9,7 +9,8 @@ the programm can execute commands with their full path
 It can also execute commands without their full path e.g ls
 
 ## Inbuilt Commands
-                                                      The shell execute the following inbuilt commands
+
+The shell execute the following inbuilt commands
 
 ### exit:
 - This is use to exit the shell. It exit with a
@@ -17,8 +18,9 @@ default status except specified.
 Usage: exit
 Usage with argument: exit <status>
 
-###- env:
-- This command list all the environment variable Usage: env
+### env:
+- This command list all the environment variable Usage:
+          env
 
 ### setenv:
 - This command set an environment variable if
