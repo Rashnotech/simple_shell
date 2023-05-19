@@ -18,18 +18,22 @@ int main(int argc, char **av)
 	{
 		char *input;
 		ssize_t no_char = 0;
-		int no_of_cmd = 0;
 
-		fd = print_prompt(argc, file);
+		fd = print_prompt(argc);
 	/*read command from stdin*/
 		input = get_input(fd, &no_char);
 		if (no_char == -1)
 		{
 			free(input);
-			my_putchar('\n');
+			if (isatty(STDIN_FILENO))
+				my_putchar('\n');
 			break;
 		}
+<<<<<<< HEAD
 		if (no_char == 1 || input == 0)
+=======
+		if (no_char == 1 || my_strcmp(input, " ") == 0)
+>>>>>>> initech
 		{
 			free(input);
 			continue;
@@ -38,22 +42,19 @@ int main(int argc, char **av)
 		tokenizer(input, &av, no_char);
 		if (av[0] == NULL)
 			continue;
-		if (in_built(programe_name, av, input,argc) == 0)
+		if (in_built(programe_name, av, input, argc) == 0)
 			continue;
 		errorcode = command_execute(av, programe_name);
 		free(input);
 		free_arrays(&av);
 	}
 	normal_exit(errorcode);
-	if (errorcode == 1)
-		exit(EXIT_FAILURE);
-	else
-	exit(EXIT_SUCCESS);
+	return (0);
 }
 
 /**
  * in_built - check for built-in commands
- * @programe_name: name of programe
+ * @name: name of programe
  * @argv: the command enterd
  * @lineptr: lineptr
  * @argc: argument counter
@@ -124,11 +125,10 @@ int in_built(char *name, char **argv, char *lineptr, int argc)
 /**
  * print_prompt - prints prompt depending on the mood
  * @argc: argumemt count
- * @argv: argument array
  * Return: file discriptor
  */
 
-int print_prompt(int argc, char *file)
+int print_prompt(int argc)
 {
 	int fd = STDIN_FILENO;
 	
@@ -149,7 +149,6 @@ char *get_input(int fd, ssize_t *no_char)
 {
 	char *lineptr = NULL;
 	size_t n;
-/*	pid_t my_pid = getpid();*/
 
 	*no_char = (_getline(&lineptr, &n, fd));
 
