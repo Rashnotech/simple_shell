@@ -117,7 +117,7 @@ char *_strchr(char *str, char c)
 		if (str[i] == c)
 			return (&str[i]);
 	}
-	return (0);
+	return (NULL);
 }
 
 /**
