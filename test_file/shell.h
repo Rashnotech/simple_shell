@@ -45,6 +45,7 @@ int my_strcmp(const char *str1, const char *str2);
 char *my_strcat(char *dest, char *src);
 int my_strncmp(const char *s1, const char *s2, size_t n);
 char *_strchr(char *str, char c);
+char *_strstr(char *haystack, char *needle);
 
 /********************HANDLE ERROR********************/
 int error_putchar(char c);
@@ -56,7 +57,7 @@ void handle_error(char *name, char *cmd);
 ssize_t _getline(char **lineptr, size_t *n, int fd);
 size_t _readline(char **lineptr, size_t *n, char buffer[], int fd, int size);
 char *_strtok(char *str, const char *delim);
-int handle_semicolon(char *input, char *name, ssize_t no_char, int argc);
+int handle_semicolon(char *input, char *name, ssize_t no_char, int argc, char *delim);
 char *my_strtok(char *str, const char *delim);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_arrays(char ***av);

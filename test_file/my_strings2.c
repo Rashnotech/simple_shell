@@ -40,3 +40,28 @@ int my_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (0);
 }
+
+/**
+ * _strstr - find the occurence needle in the haystack and print
+ * @haystack: given string character
+ * @needle: search substring
+ *
+ * Return: string of found character otherwise NULL
+ */
+char *_strstr(char *haystack, char *needle)
+{
+	char *stk, *stk_start, *stk2;
+	int i = 0;
+
+	stk = haystack;
+	while (*stk != '\0')
+	{
+		stk_start = stk, stk2 = needle;
+		while (stk[i] != '\0' && stk2[i] != '\0' && stk[i] == stk2[i])
+			i++;
+		if (stk[i] == '\0')
+			return (stk_start);
+		stk = stk_start + 1;
+	}
+	return (0);
+}

@@ -1,5 +1,4 @@
 #include "shell.h"
-
 /**
  * main -This is the Entry point
  * @argc: argument counts
@@ -8,7 +7,7 @@
  */
 int main(int argc, char **av)
 {
-	char *programe_name = av[0], *file = av[1];
+	char *programe_name = av[0], *file = av[1], *input, *delim;
 	int errorcode = 0, fd;
 
 	signal(SIGINT, signalHandle);
@@ -16,7 +15,6 @@ int main(int argc, char **av)
 		file_handler(file, programe_name, argc);
 	while (1)
 	{
-		char *input;
 		ssize_t no_char = 0;
 
 		fd = print_prompt(argc);
@@ -33,9 +31,11 @@ int main(int argc, char **av)
 			free(input);
 			continue;
 		}
-		if (_strchr(input, ';') != NULL)
+		delim = _strchr(input, ';') != NULL ? ";" : _strstr(input, "&&")
+			!= NULL ? "&&" : _strstr(input, "||") ? "||" : "";
+		if (delim)
 		{
-			handle_semicolon(input, programe_name, no_char, argc);
+			handle_semicolon(input, programe_name, no_char, argc, delim);
 			continue;
 		}
 		tokenizer(input, &av, no_char);

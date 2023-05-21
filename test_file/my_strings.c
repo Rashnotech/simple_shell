@@ -5,7 +5,6 @@
  * @s: char to be checked
  * Return: 0 is success
  */
-
 int my_strlen(const char *s)
 {
 	int i = 0;
@@ -110,6 +109,5 @@ char *my_strcat(char *dest, char *src)
 		src++;
 	}
 	*dest = '\0';
-
 	return (dest);
 }
