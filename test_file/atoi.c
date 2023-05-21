@@ -33,3 +33,34 @@ int _atoi(const char *s)
 		return (0);
 	return (n);
 }
+
+/**
+ * exit_cmd - handle exit command
+ * @name: name for program
+ * @argv: argument vector
+ * @lineptr: line pointer
+ *
+ * Return: an integer value of 0 otherwise -1
+ */
+int exit_cmd(char *name, char **argv, char *lineptr)
+{
+	int status;
+
+	if (argv[1] != NULL)
+	{
+		status = _atoi(argv[1]);
+		if (status < 0)
+		{
+			handle_exit(name, argv[0], status);
+			return (0);
+		}
+		else
+			status %= 256;
+		free(lineptr);
+		free_arrays(&argv);
+		exit(status);
+	}
+	free(lineptr);
+	free_arrays(&argv);
+	exit(EXIT_SUCCESS);
+}

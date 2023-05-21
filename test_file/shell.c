@@ -66,58 +66,21 @@ int in_built(char *name, char **argv, char *lineptr, int argc)
 
 	if (my_strcmp(argv[0], "exit") == 0)
 	{
-		if (argv[1] != NULL)
-		{
-			status = _atoi(argv[1]);
-			if (status < 0)
-			{
-				handle_exit(name, argv[0], status);
-				return (0);
-			}
-			else
-				status %= 256;
-			free(lineptr);
-			free_arrays(&argv);
-			exit(status);
-		}
-		free(lineptr);
-		free_arrays(&argv);
-		exit(EXIT_SUCCESS);
+		status = exit_cmd(name, argv, lineptr);
+		return (status);
 	}
-
 	else if (my_strcmp(argv[0], "env") == 0)
-	{
 		my_environ();
-		if (argc == 1)
-			free(lineptr);
-		free_arrays(&argv);
-		return (0);
-	}
 	else if (my_strcmp(argv[0], "setenv") == 0)
-	{
 		my_setenv(argv[1], argv[2]);
-		if (argc == 1)
-			free(lineptr);
-		free_arrays(&argv);
-		return (0);
-	}
 	else if (my_strcmp(argv[0], "unsetenv") == 0)
-	{
 		my_unsetenv(argv[1]);
-		if (argc == 1)
-			free(lineptr);
-		free_arrays(&argv);
-		return (0);
-	}
 	else if (my_strcmp(argv[0], "cd") == 0)
-	{
 		change_dir(argv[1]);
-		if (argc == 1)
-			free(lineptr);
-		free_arrays(&argv);
-		return (0);
-	}
-	return (-1);
+	else
+		return (-1);
+	status = clean_up(argv, lineptr, argc);
+	return (status);
 }
 
 /**
@@ -147,4 +110,19 @@ char *get_input(int fd, ssize_t *no_char)
 
 	*no_char = (_getline(&lineptr, &n, fd));
 	return (lineptr);
+}
+
+/**
+ * clean_up - clean up argument vector and line pointer
+ * @argv: argument vector
+ * @lineptr: line pointer
+ * @argc: argument counter
+ * Return: an integer value of 0
+ */
+int clean_up(char **argv, char *lineptr, int argc)
+{
+	if (argc == 1)
+		free(lineptr);
+	free_arrays(&argv);
+	return (0);
 }

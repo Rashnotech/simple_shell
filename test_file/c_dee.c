@@ -50,7 +50,7 @@ void change_dir(char *dir)
  *
  * Return: an integer value of 0 on success otherwise -1 for error
  */
-int _setenv(const char *name, const char *value, int overwrite)
+int _setenv(char *name, char *value, int overwrite)
 {
 	char *x_env;
 	int status;
