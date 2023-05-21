@@ -34,7 +34,11 @@ int main(int argc, char **av)
 			free(input);
 			continue;
 		}
-	/*tokenize string into individual commands*/
+		if (_strchr(input, ';') != NULL)
+		{
+			handle_semicolon(input, programe_name, no_char, argc);
+			continue;
+		}
 		tokenizer(input, &av, no_char);
 		if (av[0] == NULL)
 			continue;

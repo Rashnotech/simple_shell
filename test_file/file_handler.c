@@ -25,11 +25,13 @@ void file_handler(char *file, char *programe_name, int argc)
 	}
 
 	input = get_input(fd, &no_char);
-	token = _strtok(input, "\n");
+	token = my_strtok(input, "\n");
 	while (token != NULL)
 	{
 		tokenizer(token, &argv, no_char);
-		token = _strtok(NULL, "\n");
+		token = my_strtok(NULL, "\n");
+		if (argv[0] == NULL)
+			continue;
 		if (in_built(programe_name, argv, input, argc) == 0)
 			continue;
 		errorcode = command_execute(argv, programe_name);

@@ -63,7 +63,8 @@ void handle_error(char *name, char *cmd);
 ssize_t _getline(char **lineptr, size_t *n, int fd);
 size_t _readline(char **lineptr, size_t *n, char buffer[], int fd, int size);
 char *_strtok(char *str, const char *delim);
-
+int handle_semicolon(char *input, char *name, ssize_t no_char, int argc);
+char *my_strtok(char *str, const char *delim);
 
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
