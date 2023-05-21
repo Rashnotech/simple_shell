@@ -12,11 +12,9 @@ void my_environ(void)
 	while (env[i] != NULL)
 	{
 		envlen = my_strlen(env[i]);
-
 		write(1, env[i], envlen);
 		write(1, "\n", 1);
 		env++;
-
 	}
 }
 
@@ -24,10 +22,8 @@ void my_environ(void)
  * my_setenv - for seting the environ variable to the given value
  * @var_name: name of the variable to be changed or created
  * @value: the value to be assigned
- * Return: returns 0 at success and
- * -1 at error
+ * Return: returns 0 at success and -1 at error
  */
-
 int my_setenv(char *var_name, char *value)
 {
 	int i;
@@ -41,20 +37,15 @@ int my_setenv(char *var_name, char *value)
 			len = (my_strlen(var_name) + 2);
 		else
 			len = (my_strlen(var_name) + my_strlen(value) + 2);
-
-
 		var = malloc(sizeof(char) * len);
 		if (var == NULL)
 			return (1);
-
 		for (i = 0; i < len; i++)
 			var[i] = '\0';
-
 		my_strcat(var, var_name);
 		my_strcat(var, "=");
 		if (value != NULL)
 			my_strcat(var, value);
-
 		while (*env_var != NULL)
 		{
 			if (my_strncmp(*env_var, var_name, my_strlen(var_name)) == 0)
@@ -76,7 +67,6 @@ int my_setenv(char *var_name, char *value)
  * @var_name: the variable to be deleted
  * Return: 0 at success and -1 on failure
  */
-
 int my_unsetenv(char *var_name)
 {
 	char **env_var = environ;
@@ -104,7 +94,6 @@ int my_unsetenv(char *var_name)
  * @var_name: the name of the environ variable.
  * Return: a string containing the value of environ variable
  */
-
 char *my_getenv(char *var_name)
 {
 	char **env = environ;

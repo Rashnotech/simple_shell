@@ -6,7 +6,6 @@
  * @delim: delumiters to seperate strings
  * Return: a pointer to the beginig of string
  */
-
 char *_strtok(char *str, const char *delim)
 {
 	static char *str_copy;
@@ -47,17 +46,12 @@ char *_strtok(char *str, const char *delim)
 		return (token);
 }
 
-
-
-#include "shell.h"
-
 /**
- * _strtok - for tokenizing string into smmall token
+ * my_strtok - for tokenizing string into smmall token
  * @str: the string to be tokenized
  * @delim: delumiters to seperate strings
  * Return: a pointer to the beginig of string
  */
-
 char *my_strtok(char *str, const char *delim)
 {
 	static char *str_copy;
@@ -68,9 +62,7 @@ char *my_strtok(char *str, const char *delim)
 		str_copy = str;
 	if (str_copy == NULL)
 		return (NULL);
-
 	token = str_copy;
-
 	for (; *str_copy != '\0'; str_copy++)
 	{
 		delim_copy = delim;

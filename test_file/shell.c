@@ -20,7 +20,6 @@ int main(int argc, char **av)
 		ssize_t no_char = 0;
 
 		fd = print_prompt(argc);
-	/*read command from stdin*/
 		input = get_input(fd, &no_char);
 		if (no_char == -1)
 		{
@@ -60,7 +59,6 @@ int main(int argc, char **av)
  * @argc: argument counter
  * Return: 0 on if command is a built in
  */
-
 int in_built(char *name, char **argv, char *lineptr, int argc)
 {
 	int status;
@@ -127,14 +125,12 @@ int in_built(char *name, char **argv, char *lineptr, int argc)
  * @argc: argumemt count
  * Return: file discriptor
  */
-
 int print_prompt(int argc)
 {
 	int fd = STDIN_FILENO;
-	
+
 	if (isatty(STDIN_FILENO) && argc == 1)
 		write(1, "$ ", 2);
-
 	return (fd);
 }
 
@@ -150,6 +146,5 @@ char *get_input(int fd, ssize_t *no_char)
 	size_t n;
 
 	*no_char = (_getline(&lineptr, &n, fd));
-
 	return (lineptr);
 }

@@ -5,11 +5,10 @@
  * @errorcode: checks error
  * Return: void
  */
-
 void normal_exit(int errorcode)
 {
 	if (errorcode == 1)
 		exit(EXIT_FAILURE);
 	else
-		exit(EXIT_SUCCESS);                
+		exit(EXIT_SUCCESS);
 }

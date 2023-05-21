@@ -52,28 +52,17 @@ void change_dir(char *dir)
  */
 int _setenv(const char *name, const char *value, int overwrite)
 {
-	char *x_env, *new_env;
-	int len, status;
+	char *x_env;
+	int status;
 
 	if (name == NULL || value == NULL)
 		return (-1);
 	x_env = _getenv(name);
 	if (x_env != NULL && overwrite == 0)
 		return (-1);
-	len = my_strlen(name) + my_strlen(value) + 2;
-	new_env = malloc(sizeof(char) * len);
-	if (!new_env)
-	{
-		perror("Memory allocation failed");
-		return (-1);
-	}
-	snprintf(new_env, len, "%s=%s", name, value);
-	status = putenv(new_env);
+	status = my_setenv(name, value);
 	if (status != 0)
-	{
-		free(new_env);
 		return (-1);
-	}
 	return (0);
 }
 
@@ -111,7 +100,7 @@ char *_getenv(const char *name)
 char *_strchr(char *str, char c)
 {
 	int i = 0;
-	
+
 	for (; str[i] != '\0'; i++)
 	{
 		if (str[i] == c)
@@ -121,7 +110,7 @@ char *_strchr(char *str, char c)
 }
 
 /**
- * signalHandler - handle ctrl c signal
+ * signalHandle - handle ctrl c signal
  * @signum: signal number
  *
  * Return: return an integer value

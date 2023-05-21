@@ -1,5 +1,13 @@
 #include "shell.h"
-
+/**
+ * handle_semicolon - Handle semicolons in command
+ * @input: entry command
+ * @name: programme name
+ * @no_char: number of characters
+ * @argc: argument counter
+ *
+ * Return: an integer value of 0 otherwise -1
+ */
 int handle_semicolon(char *input, char *name, ssize_t no_char, int argc)
 {
 	char **argv = NULL, *token, *input_copy;
@@ -7,7 +15,6 @@ int handle_semicolon(char *input, char *name, ssize_t no_char, int argc)
 	argc = 2;
 	input_copy = my_strdup(input);
 	token = my_strtok(input_copy, ";");
-	
 	while (token != NULL)
 	{
 		tokenizer(token, &argv, no_char);
@@ -21,7 +28,5 @@ int handle_semicolon(char *input, char *name, ssize_t no_char, int argc)
 	}
 	free(input_copy);
 	free(input);
-
 	return (0);
 }
-
