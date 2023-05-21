@@ -39,7 +39,7 @@ int main(int argc, char **av)
 			continue;
 		}
 		tokenizer(input, &av, no_char);
-		if (av[0] == NULL && in_built(programe_name, av, input, argc) == 0)
+		if (av[0] == NULL || in_built(programe_name, av, input, argc) == 0)
 			continue;
 		errorcode = command_execute(av, programe_name);
 		free(input);
