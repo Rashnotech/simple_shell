@@ -5,10 +5,11 @@
  * @name: programme name
  * @no_char: number of characters
  * @argc: argument counter
- *
+ * @delim: delimeters
  * Return: an integer value of 0 otherwise -1
  */
-int handle_semicolon(char *input, char *name, ssize_t no_char, int argc, char *delim)
+int handle_semicolon(char *input, char *name, ssize_t no_char,
+		int argc, char *delim)
 {
 	char **argv = NULL, *token, *input_copy;
 

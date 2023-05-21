@@ -9,11 +9,11 @@
 
 int command_execute(char **argv, char *name)
 {
-	char *full_path;
-	int status;
+	char *full_path, **next_args;
+	int status, ret = 0;
 	pid_t my_pid;
 
-
+	(void)ret;
 	full_path = my_getpath(argv[0]);
 	if (full_path != NULL)
 	{
@@ -31,14 +31,26 @@ int command_execute(char **argv, char *name)
 	my_pid = fork();
 	if (my_pid == -1)
 		perror("Error: ");
-
 	else if (my_pid == 0)
-	{
 		execve(argv[0], argv, environ);
-
-	}
-
 	else
+	{
 		waitpid(my_pid, &status, 0);
+		if (status == 0)
+		{
+			next_args = argv;
+			while (*next_args != NULL)
+			{
+				if (my_strcmp(*next_args, "&&") == 0)
+				{
+					next_args++;
+					break;
+				}
+				next_args++;
+			}
+			if (*next_args != NULL)
+				ret = command_execute(next_args, name);
+		}
+	}
 	return (0);
 }

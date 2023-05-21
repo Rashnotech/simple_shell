@@ -32,7 +32,7 @@ int main(int argc, char **av)
 			continue;
 		}
 		delim = _strchr(input, ';') != NULL ? ";" : _strstr(input, "&&")
-			!= NULL ? "&&" : _strstr(input, "||") ? "||" : "";
+			!= NULL ? "&&" : _strstr(input, "||") != NULL ? "||" : "";
 		if (delim)
 		{
 			handle_semicolon(input, programe_name, no_char, argc, delim);
