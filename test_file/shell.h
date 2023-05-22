@@ -60,20 +60,16 @@ char *_strtok(char *str, const char *delim);
 int handle_semicolon(char *input, char *name, ssize_t no_char, int argc, char *delim);
 char *my_strtok(char *str, const char *delim);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-<<<<<<< HEAD
 
 size_t my_strspn(char *str, const char *delim);
 size_t my_strcspn(char *str, const char *delim);
 
 void free_arrays(char ***av);
-/*"*"*"*"*"*"*"*"IN_BUILT FUNCTIONS"*"*"*"*"*"*"*"*"*/
 
-=======
-void free_arrays(char ***av);
 int clean_up(char **argv, char *lineptr, int argc);
 
-/************************IN_BUILT FUNCTIONS******************/
->>>>>>> remotes/Rashnotech/bourne
+/***************IN_BUILT FUNCTIONS***************/
+
 int in_built(char *name, char **argv, char *lineptr, int argc);
 void change_dir(char *dir);
 void signalHandle(int signum);

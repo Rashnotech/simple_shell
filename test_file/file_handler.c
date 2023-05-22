@@ -11,10 +11,6 @@ void file_handler(char *file, char *programe_name, int argc)
 	char *token = NULL, *input, **argv;
 	int fd, errorcode;
 	ssize_t no_char;
-<<<<<<< HEAD
-
-=======
->>>>>>> remotes/Rashnotech/bourne
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)

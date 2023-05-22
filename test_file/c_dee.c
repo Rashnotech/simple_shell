@@ -53,34 +53,16 @@ void change_dir(char *dir)
 int _setenv(char *name, char *value, int overwrite)
 {
 	char *x_env;
-<<<<<<< HEAD
-	char *new_env = NULL;
-	int len, status;
-	static int i = 0;
-=======
 	int status;
 
->>>>>>> remotes/Rashnotech/bourne
 	if (name == NULL || value == NULL)
 		return (-1);
 	x_env = _getenv(name);
 	if (x_env != NULL && overwrite == 0)
 		return (-1);
-<<<<<<< HEAD
-	len = my_strlen(name) + my_strlen(value) + 2;
 
-	new_env = malloc(sizeof(char) * len);
-	if (!new_env)
-	{
-		perror("Memory allocation failed");
-		return (-1);
-	}
-	i++;
-	snprintf(new_env, len, "%s=%s", name, value);
-	status = putenv(new_env);
-=======
 	status = my_setenv(name, value);
->>>>>>> remotes/Rashnotech/bourne
+
 	if (status != 0)
 		return (-1);
 	return (0);

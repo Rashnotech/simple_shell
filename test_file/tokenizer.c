@@ -29,12 +29,8 @@ int tokenizer(char *command, char ***argv, ssize_t num_chars)
 	{
 		exit(-1);
 	}
-<<<<<<< HEAD
 
 	token = my_strtok(command, delim);
-=======
-	token = _strtok(command, delim);
->>>>>>> remotes/Rashnotech/bourne
 	for (i = 0; token != NULL && token[0] != '#'; i++)
 	{
 		(*argv)[i] = malloc(sizeof(char) * (my_strlen(token) + 1));

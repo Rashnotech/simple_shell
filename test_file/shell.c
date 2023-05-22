@@ -38,16 +38,8 @@ int main(int argc, char **av)
 			handle_semicolon(input, programe_name, no_char, argc, delim);
 			continue;
 		}
-<<<<<<< HEAD
+
 		errorcode = continue_main(input, av, programe_name, no_char, argc);
-=======
-		tokenizer(input, &av, no_char);
-		if (av[0] == NULL || in_built(programe_name, av, input, argc) == 0)
-			continue;
-		errorcode = command_execute(av, programe_name);
-		free(input);
-		free_arrays(&av);
->>>>>>> remotes/Rashnotech/bourne
 	}
 	normal_exit(errorcode);
 	return (0);
