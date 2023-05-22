@@ -14,7 +14,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-
 extern char **environ;
 
 
@@ -22,6 +21,7 @@ char *my_getpath(char *cmd);
 int tokenizer(char *command, char ***argv, ssize_t num_char);
 int command_execute(char **argv, char *name);
 
+int continue_main(char *input, char **argv, char *name, size_t no_char, int argc);
 /***************EMVIRONMENT FUNCTIONS***************/
 
 int my_unsetenv(char *var_name);
@@ -68,8 +68,10 @@ char *my_strtok(char *str, const char *delim);
 
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
-void free_arrays(char ***av);
+size_t my_strspn(char *str, const char *delim);
+size_t my_strcspn(char *str, const char *delim);
 
+void free_arrays(char ***av);
 /*"*"*"*"*"*"*"*"IN_BUILT FUNCTIONS"*"*"*"*"*"*"*"*"*/
 
 int in_built(char *name, char **argv, char *lineptr, int argc);

@@ -28,7 +28,10 @@ void handle_error(char *name, char *cmd)
 
 /**
  * handle_exit - print exit error
- * @status: status code
+ * @name: progrme name
+ * @cmd: the command
+ * @code: the negetive number
+ * Return: void
  */
 void handle_exit(char *name, char *cmd, int code)
 {

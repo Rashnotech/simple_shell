@@ -52,21 +52,24 @@ void change_dir(char *dir)
  */
 int _setenv(const char *name, const char *value, int overwrite)
 {
-	char *x_env, *new_env;
+	char *x_env;
+	char *new_env = NULL;
 	int len, status;
-
+	static int i = 0;
 	if (name == NULL || value == NULL)
 		return (-1);
 	x_env = _getenv(name);
 	if (x_env != NULL && overwrite == 0)
 		return (-1);
 	len = my_strlen(name) + my_strlen(value) + 2;
+
 	new_env = malloc(sizeof(char) * len);
 	if (!new_env)
 	{
 		perror("Memory allocation failed");
 		return (-1);
 	}
+	i++;
 	snprintf(new_env, len, "%s=%s", name, value);
 	status = putenv(new_env);
 	if (status != 0)

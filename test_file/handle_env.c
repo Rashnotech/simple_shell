@@ -30,11 +30,9 @@ void my_environ(void)
 
 int my_setenv(char *var_name, char *value)
 {
-	int i;
+	int i, len;
 	char *var;
 	char **env_var = environ;
-	int len;
-
 	if (var_name != NULL)
 	{
 		if (value == NULL)

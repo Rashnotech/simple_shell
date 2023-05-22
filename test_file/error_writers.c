@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * my_putchar - writes char c to stdout
+ * error_putchar - writes char c to stdout
  * @c: The char to be printed
  * Return: 0 on success
  * On error, -1 is returned
@@ -15,7 +15,7 @@ int error_putchar(char c)
 
 
 /**
- * my_puts - prints a string of char to stdout
+ * error_puts - prints a string of char to stdout
  * @str: the string of char to be printed
  * Return: the length of the string
  */
@@ -32,7 +32,7 @@ void error_puts(const char *str)
 }
 
 /**
- * put_number - for writing int
+ * errorput_number - for writing int
  * @i: number to be written
  * Return: 0 on success or 1 on failure
  */

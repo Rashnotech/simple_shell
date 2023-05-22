@@ -39,19 +39,38 @@ int main(int argc, char **av)
 			handle_semicolon(input, programe_name, no_char, argc);
 			continue;
 		}
-		tokenizer(input, &av, no_char);
-		if (av[0] == NULL)
-			continue;
-		if (in_built(programe_name, av, input, argc) == 0)
-			continue;
-		errorcode = command_execute(av, programe_name);
-		free(input);
-		free_arrays(&av);
+		errorcode = continue_main(input, av, programe_name, no_char, argc);
 	}
 	normal_exit(errorcode);
 	return (0);
 }
 
+/**
+ * continue_main - continue the maun funtion
+ * @input: the command
+ * @argv: the array of commands
+ * @name: program name
+ * @no_char: no of char read as input
+ * @argc: argument count
+ * Return: 0 at success
+ */
+
+int continue_main(char *input, char **argv, char *name, size_t no_char, int argc)
+{
+	int errorcode;
+	tokenizer(input, &argv, no_char);
+	if (argv[0] == NULL)
+		return (0);
+	if (in_built(name, argv, input, argc) == 0)
+		return (0);
+	errorcode = command_execute(argv, name);
+
+	free(input);
+	free_arrays(&argv);
+
+	return (errorcode);
+}
+	
 /**
  * in_built - check for built-in commands
  * @name: name of programe

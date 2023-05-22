@@ -13,7 +13,7 @@ void file_handler(char *file, char *programe_name, int argc)
 	char *token = NULL, *input, **argv;
 	int fd, errorcode;
 	ssize_t no_char;
-	
+
 
 	if ((fd = open(file, O_RDONLY)) == -1)
 	{
@@ -25,11 +25,11 @@ void file_handler(char *file, char *programe_name, int argc)
 	}
 
 	input = get_input(fd, &no_char);
-	token = my_strtok(input, "\n");
+	token = _strtok(input, "\n");
 	while (token != NULL)
 	{
 		tokenizer(token, &argv, no_char);
-		token = my_strtok(NULL, "\n");
+		token = _strtok(NULL, "\n");
 		if (argv[0] == NULL)
 			continue;
 		if (in_built(programe_name, argv, input, argc) == 0)
