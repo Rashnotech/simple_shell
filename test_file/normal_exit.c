@@ -5,7 +5,6 @@
  * @errorcode: checks error
  * Return: void
  */
-
 void normal_exit(int errorcode)
 {
 	if (errorcode == 1)

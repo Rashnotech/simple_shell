@@ -1,5 +1,4 @@
 #include "shell.h"
-
 /**
  * main -This is the Entry point
  * @argc: argument counts
@@ -8,7 +7,7 @@
  */
 int main(int argc, char **av)
 {
-	char *programe_name = av[0], *file = av[1];
+	char *programe_name = av[0], *file = av[1], *input, *delim;
 	int errorcode = 0, fd;
 
 	signal(SIGINT, signalHandle);
@@ -16,11 +15,9 @@ int main(int argc, char **av)
 		file_handler(file, programe_name, argc);
 	while (1)
 	{
-		char *input;
 		ssize_t no_char = 0;
 
 		fd = print_prompt(argc);
-	/*read command from stdin*/
 		input = get_input(fd, &no_char);
 		if (no_char == -1)
 		{
@@ -34,12 +31,23 @@ int main(int argc, char **av)
 			free(input);
 			continue;
 		}
-		if (_strchr(input, ';') != NULL)
+		delim = _strchr(input, ';') != NULL ? ";" : _strstr(input, "&&")
+			!= NULL ? "&&" : _strstr(input, "||") != NULL ? "||" : "";
+		if (delim)
 		{
-			handle_semicolon(input, programe_name, no_char, argc);
+			handle_semicolon(input, programe_name, no_char, argc, delim);
 			continue;
 		}
+<<<<<<< HEAD
 		errorcode = continue_main(input, av, programe_name, no_char, argc);
+=======
+		tokenizer(input, &av, no_char);
+		if (av[0] == NULL || in_built(programe_name, av, input, argc) == 0)
+			continue;
+		errorcode = command_execute(av, programe_name);
+		free(input);
+		free_arrays(&av);
+>>>>>>> remotes/Rashnotech/bourne
 	}
 	normal_exit(errorcode);
 	return (0);
@@ -79,7 +87,6 @@ int continue_main(char *input, char **argv, char *name, size_t no_char, int argc
  * @argc: argument counter
  * Return: 0 on if command is a built in
  */
-
 int in_built(char *name, char **argv, char *lineptr, int argc)
 {
 	int status;
@@ -87,58 +94,21 @@ int in_built(char *name, char **argv, char *lineptr, int argc)
 
 	if (my_strcmp(argv[0], "exit") == 0)
 	{
-		if (argv[1] != NULL)
-		{
-			status = _atoi(argv[1]);
-			if (status < 0)
-			{
-				handle_exit(name, argv[0], status);
-				return (0);
-			}
-			else
-				status %= 256;
-			free(lineptr);
-			free_arrays(&argv);
-			exit(status);
-		}
-		free(lineptr);
-		free_arrays(&argv);
-		exit(EXIT_SUCCESS);
+		status = exit_cmd(name, argv, lineptr);
+		return (status);
 	}
-
 	else if (my_strcmp(argv[0], "env") == 0)
-	{
 		my_environ();
-		if (argc == 1)
-			free(lineptr);
-		free_arrays(&argv);
-		return (0);
-	}
 	else if (my_strcmp(argv[0], "setenv") == 0)
-	{
 		my_setenv(argv[1], argv[2]);
-		if (argc == 1)
-			free(lineptr);
-		free_arrays(&argv);
-		return (0);
-	}
 	else if (my_strcmp(argv[0], "unsetenv") == 0)
-	{
 		my_unsetenv(argv[1]);
-		if (argc == 1)
-			free(lineptr);
-		free_arrays(&argv);
-		return (0);
-	}
 	else if (my_strcmp(argv[0], "cd") == 0)
-	{
 		change_dir(argv[1]);
-		if (argc == 1)
-			free(lineptr);
-		free_arrays(&argv);
-		return (0);
-	}
-	return (-1);
+	else
+		return (-1);
+	status = clean_up(argv, lineptr, argc);
+	return (status);
 }
 
 /**
@@ -146,14 +116,12 @@ int in_built(char *name, char **argv, char *lineptr, int argc)
  * @argc: argumemt count
  * Return: file discriptor
  */
-
 int print_prompt(int argc)
 {
 	int fd = STDIN_FILENO;
 
 	if (isatty(STDIN_FILENO) && argc == 1)
 		write(1, "$ ", 2);
-
 	return (fd);
 }
 
@@ -169,6 +137,20 @@ char *get_input(int fd, ssize_t *no_char)
 	size_t n;
 
 	*no_char = (_getline(&lineptr, &n, fd));
-
 	return (lineptr);
+}
+
+/**
+ * clean_up - clean up argument vector and line pointer
+ * @argv: argument vector
+ * @lineptr: line pointer
+ * @argc: argument counter
+ * Return: an integer value of 0
+ */
+int clean_up(char **argv, char *lineptr, int argc)
+{
+	if (argc == 1)
+		free(lineptr);
+	free_arrays(&argv);
+	return (0);
 }

@@ -1,13 +1,66 @@
 #include "shell.h"
 
+<<<<<<< HEAD
 
 /**
  * my_strtok - a custom string tokeniser
  * @str: sting to be tokenized
  * @delim: delimeter
  * Return: a string
+=======
+/**
+ * _strtok - for tokenizing string into smmall token
+ * @str: the string to be tokenized
+ * @delim: delumiters to seperate strings
+ * Return: a pointer to the beginig of string
  */
+char *_strtok(char *str, const char *delim)
+{
+	static char *str_copy;
+	char *token;
+	const char *delim_copy;
 
+	if (str != NULL)
+		str_copy = str;
+	if (str_copy == NULL)
+		return (NULL);
+
+	token = str_copy;
+
+	for (; *str_copy != '\0'; str_copy++)
+	{
+		delim_copy = delim;
+		for (; *delim_copy != '\0'; delim_copy++)
+		{
+			if (*str_copy == *delim_copy)
+			{
+				*str_copy = '\0';
+				str_copy++;
+				if (*token != '\0')
+					return (token);
+
+				else
+				{
+					token = str_copy;
+					break;
+				}
+			}
+		}
+	}
+	str_copy = NULL;
+	if (*token == '\0')
+		return (NULL);
+	else
+		return (token);
+}
+
+/**
+ * my_strtok - for tokenizing string into smmall token
+ * @str: the string to be tokenized
+ * @delim: delumiters to seperate strings
+ * Return: a pointer to the beginig of string
+>>>>>>> remotes/Rashnotech/bourne
+ */
 char *my_strtok(char *str, const char *delim)
 {
 	static char *str_copy;
@@ -18,6 +71,7 @@ char *my_strtok(char *str, const char *delim)
 		str_copy = str;
 	if (str_copy == NULL)
 		return (NULL);
+<<<<<<< HEAD
 
 	str_copy += my_strspn(str_copy, delim_copy);
 
@@ -27,6 +81,20 @@ char *my_strtok(char *str, const char *delim)
 	token = str_copy;
 
 	str_copy += my_strcspn(str_copy, delim_copy);
+=======
+	token = str_copy;
+	for (; *str_copy != '\0'; str_copy++)
+	{
+		delim_copy = delim;
+		for (; *delim_copy != '\0'; delim_copy++)
+		{
+			if (*str_copy == *delim_copy)
+			{
+				*str_copy = '\0';
+				str_copy++;
+				if (*token != '\0')
+					return (token);
+>>>>>>> remotes/Rashnotech/bourne
 
 	if (*str_copy != '\0')
 	{

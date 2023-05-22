@@ -1,5 +1,4 @@
 #include "shell.h"
-
 /**
  * tokenizer - for tokenizing of strings
  * @command: string to be tokenized
@@ -16,9 +15,7 @@ int tokenizer(char *command, char ***argv, ssize_t num_chars)
 
 	command_copy = malloc(sizeof(char) * (num_chars + 3));
 	if (command_copy == NULL)
-	{
 		exit(-1);
-	}
 	my_strcpy(command_copy, command);
 	token = my_strtok(command_copy, delim);
 	while (token != NULL)
@@ -27,14 +24,17 @@ int tokenizer(char *command, char ***argv, ssize_t num_chars)
 		token = my_strtok(NULL, delim);
 	}
 	numOf_tokens += 2;
-
 	*argv = malloc(sizeof(char *) * numOf_tokens);
 	if ((*argv) == NULL)
 	{
 		exit(-1);
 	}
+<<<<<<< HEAD
 
 	token = my_strtok(command, delim);
+=======
+	token = _strtok(command, delim);
+>>>>>>> remotes/Rashnotech/bourne
 	for (i = 0; token != NULL && token[0] != '#'; i++)
 	{
 		(*argv)[i] = malloc(sizeof(char) * (my_strlen(token) + 1));
@@ -44,6 +44,5 @@ int tokenizer(char *command, char ***argv, ssize_t num_chars)
 	(*argv)[i] = NULL;
 	(*argv)[++i] = NULL;
 	free(command_copy);
-
 	return (--numOf_tokens);
 }

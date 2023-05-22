@@ -13,7 +13,6 @@ int command_execute(char **argv, char *name)
 	int status;
 	pid_t my_pid;
 
-
 	full_path = my_getpath(argv[0]);
 	if (full_path != NULL)
 	{
@@ -31,14 +30,9 @@ int command_execute(char **argv, char *name)
 	my_pid = fork();
 	if (my_pid == -1)
 		perror("Error: ");
-
 	else if (my_pid == 0)
-	{
 		execve(argv[0], argv, environ);
-
-	}
-
 	else
 		waitpid(my_pid, &status, 0);
-	return (0);
+	return (status);
 }

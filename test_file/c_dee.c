@@ -50,17 +50,23 @@ void change_dir(char *dir)
  *
  * Return: an integer value of 0 on success otherwise -1 for error
  */
-int _setenv(const char *name, const char *value, int overwrite)
+int _setenv(char *name, char *value, int overwrite)
 {
 	char *x_env;
+<<<<<<< HEAD
 	char *new_env = NULL;
 	int len, status;
 	static int i = 0;
+=======
+	int status;
+
+>>>>>>> remotes/Rashnotech/bourne
 	if (name == NULL || value == NULL)
 		return (-1);
 	x_env = _getenv(name);
 	if (x_env != NULL && overwrite == 0)
 		return (-1);
+<<<<<<< HEAD
 	len = my_strlen(name) + my_strlen(value) + 2;
 
 	new_env = malloc(sizeof(char) * len);
@@ -72,11 +78,11 @@ int _setenv(const char *name, const char *value, int overwrite)
 	i++;
 	snprintf(new_env, len, "%s=%s", name, value);
 	status = putenv(new_env);
+=======
+	status = my_setenv(name, value);
+>>>>>>> remotes/Rashnotech/bourne
 	if (status != 0)
-	{
-		free(new_env);
 		return (-1);
-	}
 	return (0);
 }
 
@@ -114,7 +120,7 @@ char *_getenv(const char *name)
 char *_strchr(char *str, char c)
 {
 	int i = 0;
-	
+
 	for (; str[i] != '\0'; i++)
 	{
 		if (str[i] == c)
@@ -124,7 +130,7 @@ char *_strchr(char *str, char c)
 }
 
 /**
- * signalHandler - handle ctrl c signal
+ * signalHandle - handle ctrl c signal
  * @signum: signal number
  *
  * Return: return an integer value
