@@ -64,3 +64,18 @@ int exit_cmd(char *name, char **argv, char *lineptr)
 	free_arrays(&argv);
 	exit(EXIT_SUCCESS);
 }
+
+/**
+ * clean_up - clean up argument vector and line pointer
+ * @argv: argument vector
+ * @lineptr: line pointer
+ * @argc: argument counter
+ * Return: an integer value of 0
+ */
+int clean_up(char **argv, char *lineptr, int argc)
+{
+	if (argc == 1)
+		free(lineptr);
+	free_arrays(&argv);
+	return (0);
+}

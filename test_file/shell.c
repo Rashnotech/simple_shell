@@ -35,7 +35,7 @@ int main(int argc, char **av)
 			!= NULL ? "&&" : _strstr(input, "||") != NULL ? "||" : "";
 		if (delim)
 		{
-			handle_semicolon(input, programe_name, no_char, argc, delim);
+			handle_operators(input, programe_name, no_char, argc, delim);
 			continue;
 		}
 
@@ -55,22 +55,22 @@ int main(int argc, char **av)
  * Return: 0 at success
  */
 
-int continue_main(char *input, char **argv, char *name, size_t no_char, int argc)
+int continue_main(char *input, char **argv, char *name,
+		size_t no_char, int argc)
 {
 	int errorcode;
+
 	tokenizer(input, &argv, no_char);
 	if (argv[0] == NULL)
 		return (0);
 	if (in_built(name, argv, input, argc) == 0)
 		return (0);
 	errorcode = command_execute(argv, name);
-
 	free(input);
 	free_arrays(&argv);
-
 	return (errorcode);
 }
-	
+
 /**
  * in_built - check for built-in commands
  * @name: name of programe
@@ -130,19 +130,4 @@ char *get_input(int fd, ssize_t *no_char)
 
 	*no_char = (_getline(&lineptr, &n, fd));
 	return (lineptr);
-}
-
-/**
- * clean_up - clean up argument vector and line pointer
- * @argv: argument vector
- * @lineptr: line pointer
- * @argc: argument counter
- * Return: an integer value of 0
- */
-int clean_up(char **argv, char *lineptr, int argc)
-{
-	if (argc == 1)
-		free(lineptr);
-	free_arrays(&argv);
-	return (0);
 }

@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * handle_semicolon - Handle semicolons in command
+ * handle_operators - Handles command operator
  * @input: entry command
  * @name: programme name
  * @no_char: number of characters
@@ -9,7 +9,7 @@
  * @delim: delimeters
  * Return: an integer value of 0 otherwise -1
  */
-int handle_semicolon(char *input, char *name, ssize_t no_char,
+int handle_operators(char *input, char *name, ssize_t no_char,
 		int argc, char *delim)
 {
 	char **argv = NULL, *token, *input_copy;
@@ -17,7 +17,6 @@ int handle_semicolon(char *input, char *name, ssize_t no_char,
 
 	argc = 2;
 	input_copy = my_strdup(input);
-
 	token = _strtok(input_copy, delim);
 	while (token != NULL)
 	{

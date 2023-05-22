@@ -26,16 +26,9 @@ void handle_error(char *name, char *cmd)
 
 /**
  * handle_exit - print exit error
-<<<<<<< HEAD
- * @name: progrme name
- * @cmd: the command
- * @code: the negetive number
- * Return: void
-=======
  * @name: program name
  * @cmd: command argument
  * @code: status code
->>>>>>> remotes/Rashnotech/bourne
  */
 void handle_exit(char *name, char *cmd, int code)
 {

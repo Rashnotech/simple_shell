@@ -29,6 +29,7 @@ int my_setenv(char *var_name, char *value)
 	int i, len;
 	char *var;
 	char **env_var = environ;
+
 	if (var_name != NULL)
 	{
 		if (value == NULL)
@@ -72,7 +73,6 @@ int my_unsetenv(char *var_name)
 
 	if (var_name == NULL)
 		return (-1);
-
 	while (*env_var != NULL)
 	{
 		if (my_strncmp(*env_var, var_name, my_strlen(var_name)) == 0)
@@ -83,7 +83,6 @@ int my_unsetenv(char *var_name)
 
 		env_var++;
 	}
-
 	return (-1);
 }
 
