@@ -12,6 +12,7 @@ int handle_semicolon(char *input, char *name, ssize_t no_char,
 		int argc, char *delim)
 {
 	char **argv = NULL, *token, *input_copy;
+	int ret;
 
 	argc = 2;
 	input_copy = my_strdup(input);
@@ -24,7 +25,10 @@ int handle_semicolon(char *input, char *name, ssize_t no_char,
 			continue;
 		if (in_built(name, argv, input, argc) == 0)
 			continue;
-		command_execute(argv, name);
+		ret = command_execute(argv, name);
+		if ((ret != 0 && my_strcmp(delim, "&&") == 0)
+				|| (ret == 0 && my_strcmp(delim, "||") == 0))
+			break;
 		free_arrays(&argv);
 	}
 	free(input_copy);
