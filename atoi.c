@@ -65,16 +65,12 @@ int exit_cmd(char *name, char **argv, char *lineptr)
 			exit(status);
 		}
 	}
-	else
-	{
-		free(lineptr);
-		free_arrays(&argv);
-		status = kill(parent_id, SIGTERM);
-		if (status == -1)
-			perror("Error existing");
-		exit(EXIT_SUCCESS);
-	}
-	return (0);
+	free(lineptr);
+	free_arrays(&argv);
+	status = kill(parent_id, SIGTERM);
+	if (status == -1)
+		perror("Error occurred during exit");
+	exit(EXIT_SUCCESS);
 }
 
 /**

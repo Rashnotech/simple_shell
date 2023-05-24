@@ -77,4 +77,5 @@ void file_handler(char *file, char *programe_name, int argc);
 /********************EXIT FUNCTIONS*****************/
 void normal_exit(int errorcode);
 void handle_exit(char *name, char *cmd, int code);
+
 #endif
