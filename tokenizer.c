@@ -10,7 +10,7 @@
 int tokenizer(char *command, char ***argv, ssize_t num_chars)
 {
 	char *command_copy = NULL, *token;
-	char *delim = " \t\r\n";
+	char *delim = "\t\r\n ";
 	int i, numOf_tokens = 0;
 
 	command_copy = malloc(sizeof(char) * (num_chars + 3));

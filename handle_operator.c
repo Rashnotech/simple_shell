@@ -12,7 +12,7 @@
 int handle_operators(char *input, char *name, ssize_t no_char,
 		int argc, char *delim)
 {
-	char **argv = NULL, *token, *input_copy;
+	char **argv = NULL, *token, *input_copy = NULL;
 	int ret;
 
 	argc = 2;
@@ -25,6 +25,7 @@ int handle_operators(char *input, char *name, ssize_t no_char,
 
 		if (argv[0] == NULL)
 		{
+			free(argv);
 			free(input_copy);
 			continue;
 		}
@@ -38,7 +39,6 @@ int handle_operators(char *input, char *name, ssize_t no_char,
 			break;
 		free_arrays(&argv);
 	}
-	free(input_copy);
 	free(input);
 	return (0);
 }
