@@ -45,7 +45,9 @@ int _atoi(const char *s)
 int exit_cmd(char *name, char **argv, char *lineptr)
 {
 	int status;
+	pid_t parent_id;
 
+	parent_id = getppid();
 	if (argv[1] != NULL)
 	{
 		status = _atoi(argv[1]);
@@ -54,15 +56,23 @@ int exit_cmd(char *name, char **argv, char *lineptr)
 			handle_exit(name, argv[0], status);
 			return (0);
 		}
-		else
+		else if (status > 0)
+		{
 			status %= 256;
+			free(lineptr);
+			free_arrays(&argv);
+			kill(parent_id, SIGTERM);
+			exit(status);
+		}
+	}
+	else
+	{
 		free(lineptr);
 		free_arrays(&argv);
-		exit(status);
+		kill(parent_id, SIGTERM);
+		exit(EXIT_SUCCESS);
 	}
-	free(lineptr);
-	free_arrays(&argv);
-	exit(EXIT_SUCCESS);
+	return (0);
 }
 
 /**
