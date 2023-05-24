@@ -39,7 +39,9 @@ int handle_operators(char *input, char *name, ssize_t no_char,
 }
 
 /**
- * print_alias - print alias commands and values
+ * print_aliases - print alias commands and values
+ * @node: struct alias node
+ * Return: an integer value counter
  */
 int print_aliases(const alias *node)
 {
@@ -61,6 +63,8 @@ int print_aliases(const alias *node)
  * add_alias - add alias command to list
  * @name: alias name
  * @value: alias value
+ * @node: struct alias node
+ * Return: a struct node
  */
 alias *add_alias(alias **node, char *name, char *value)
 {
@@ -79,6 +83,7 @@ alias *add_alias(alias **node, char *name, char *value)
 /**
  * execute_alias - perform execution on aliases or print list
  * @argv: argument vector
+ * @node: struct node
  */
 void execute_alias(alias **node, char **argv)
 {

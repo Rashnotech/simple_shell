@@ -1,4 +1,5 @@
 #include "shell.h"
+
 /**
  * my_strcpy - copy the string in src to dest
  * @dest: string to be copied to
@@ -77,7 +78,7 @@ char *_strstr(char *haystack, char *needle)
 char *_strncpy(char *dest, char *src, int n)
 {
 	int i = 0;
-	
+
 	while (i < n && src[i] != '\0')
 	{
 		dest[i] = src[i];
