@@ -34,7 +34,19 @@ Usage: unsetenv `<VARIABLE_NAME>`
 the home directory if no directory was specified. It c
 hanges to the previous directory if "-" is passed as a
 n argument
-Usage: cd `<DIR_NAME>`
+Usage: `cd <DIR_NAME>`
+
+### command separaror
+- The shell can execute multiple commands from a single input seperated by a semicolon.
+Usage: `/bin/ls ; env`
+
+### logical operators on commands
+- The shell uses normal logical operators to control the flow of command execution in a single input. The AND operator stop executing futher commands if a command returns an error. While the OR operator executes futher even after encountering an error.
+Usage: `ls && pwd` and `pwd || /bin/ls`
+
+### Passing commands through a file
+- The shell can take a file that contains commands seperated by newline and executes the commands when executed in non-interactive mood.
+Usage: `./hsh <FILE_NAME>`
 
 This project is still ongoing and there might be some
 failures some times.
