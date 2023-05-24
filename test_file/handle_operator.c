@@ -38,6 +38,7 @@ int handle_operators(char *input, char *name, ssize_t no_char,
 	return (0);
 }
 
+<<<<<<< HEAD
 /**
  * print_aliases - print alias commands and values
  * @node: struct node alias
@@ -108,3 +109,5 @@ void execute_alias(alias **node, char **argv)
 		}
 	}
 }
+=======
+>>>>>>> bourne

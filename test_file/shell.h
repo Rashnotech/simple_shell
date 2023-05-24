@@ -14,20 +14,12 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define MAX_NAME 50
-#define MAX_VALUE 100
 extern char **environ;
-typedef struct cmd
-{
-	char name[MAX_NAME];
-	char value[MAX_VALUE];
-	struct cmd *next;
-} alias;
-int print_aliases(const alias *node);
 char *my_getpath(char *cmd);
 int tokenizer(char *command, char ***argv, ssize_t num_char);
 int command_execute(char **argv, char *name);
-int continue_main(char *input, char **argv, char *name, size_t no_char, int argc);
+int continue_main(char *input, char **argv,
+		char *name, size_t no_char, int argc);
 
 /***************EMVIRONMENT FUNCTIONS***************/
 int my_unsetenv(char *var_name);
@@ -67,7 +59,8 @@ void handle_error(char *name, char *cmd);
 ssize_t _getline(char **lineptr, size_t *n, int fd);
 size_t _readline(char **lineptr, size_t *n, char buffer[], int fd, int size);
 char *_strtok(char *str, const char *delim);
-int handle_operators(char *input, char *name, ssize_t no_char, int argc, char *delim);
+int handle_operators(char *input, char *name,
+		ssize_t no_char, int argc, char *delim);
 char *my_strtok(char *str, const char *delim);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 size_t my_strspn(char *str, const char *delim);
@@ -84,6 +77,4 @@ void file_handler(char *file, char *programe_name, int argc);
 /********************EXIT FUNCTIONS*****************/
 void normal_exit(int errorcode);
 void handle_exit(char *name, char *cmd, int code);
-alias *add_alias(alias **node, char *name, char *value);
-void execute_alias(alias **node, char **cmd);
 #endif
