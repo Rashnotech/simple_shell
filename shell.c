@@ -29,6 +29,8 @@ int main(int argc, char **av)
 		if (no_char == 1 || my_strcmp(input, " ") == 0)
 		{
 			free(input);
+			if (!isatty(STDIN_FILENO))
+				break;
 			continue;
 		}
 		delim = _strchr(input, ';') != NULL ? ";" : _strstr(input, "&&")
