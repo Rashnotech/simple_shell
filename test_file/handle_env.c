@@ -33,9 +33,9 @@ int my_setenv(char *var_name, char *value)
 	if (var_name != NULL)
 	{
 		if (value == NULL)
-			len = (my_strlen(var_name) + 2);
+			len = (my_strlen(var_name) + 3);
 		else
-			len = (my_strlen(var_name) + my_strlen(value) + 2);
+			len = (my_strlen(var_name) + my_strlen(value) + 3);
 		var = malloc(sizeof(char) * len);
 		if (var == NULL)
 			return (1);
