@@ -37,3 +37,69 @@ int handle_operators(char *input, char *name, ssize_t no_char,
 	free(input);
 	return (0);
 }
+
+/**
+ * print_alias - print alias commands and values
+ */
+int print_aliases(const alias *node)
+{
+	int index = 0;
+
+	while (node != NULL)
+	{
+		my_puts(node->name);
+		my_putchar(' ');
+		my_puts(node->value);
+		my_putchar(10);
+		node = node->next;
+		index++;
+	}
+	return (index);
+}
+
+/**
+ * add_alias - add alias command to list
+ * @name: alias name
+ * @value: alias value
+ */
+alias *add_alias(alias **node, char *name, char *value)
+{
+	alias *new_node;
+
+	new_node = malloc(sizeof(alias));
+	if (!new_node)
+		return (NULL);
+	_strncpy(new_node->name, name, MAX_NAME);
+	_strncpy(new_node->value, value, MAX_VALUE);
+	new_node->next = *node;
+	*node = new_node;
+	return (new_node);
+}
+
+/**
+ * execute_alias - perform execution on aliases or print list
+ * @argv: argument vector
+ */
+void execute_alias(alias **node, char **argv)
+{
+	alias *head_node;
+	char *name, *value;
+
+	name = argv[1];
+	value = argv[2];
+	if (name != NULL && value != NULL)
+		add_alias(node, name, value);
+	else
+	{
+		head_node = *node;
+		while (head_node != NULL)
+		{
+			if (my_strcmp(head_node->name, name) == 0)
+			{
+				value = head_node->value;
+				break;
+			}
+			head_node = head_node->next;
+		}
+	}
+}

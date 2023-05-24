@@ -14,7 +14,16 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define MAX_NAME 50
+#define MAX_VALUE 100
 extern char **environ;
+typedef struct cmd
+{
+	char name[MAX_NAME];
+	char value[MAX_VALUE];
+	struct cmd *next;
+} alias;
+int print_aliases(const alias *node);
 char *my_getpath(char *cmd);
 int tokenizer(char *command, char ***argv, ssize_t num_char);
 int command_execute(char **argv, char *name);
@@ -46,6 +55,7 @@ char *my_strcat(char *dest, char *src);
 int my_strncmp(const char *s1, const char *s2, size_t n);
 char *_strchr(char *str, char c);
 char *_strstr(char *haystack, char *needle);
+char *_strncpy(char *dest, char *src, int n);
 
 /********************HANDLE ERROR********************/
 int error_putchar(char c);
@@ -66,7 +76,6 @@ void free_arrays(char ***av);
 int clean_up(char **argv, char *lineptr, int argc);
 int exit_cmd(char *name, char **argv, char *lineptr);
 /***************IN_BUILT FUNCTIONS***************/
-
 int in_built(char *name, char **argv, char *lineptr, int argc);
 void change_dir(char *dir);
 void signalHandle(int signum);
@@ -75,6 +84,6 @@ void file_handler(char *file, char *programe_name, int argc);
 /********************EXIT FUNCTIONS*****************/
 void normal_exit(int errorcode);
 void handle_exit(char *name, char *cmd, int code);
-
-
+alias *add_alias(alias **node, char *name, char *value);
+void execute_alias(alias **node, char **cmd);
 #endif
