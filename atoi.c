@@ -56,7 +56,7 @@ int exit_cmd(char *name, char **argv, char *lineptr)
 			handle_exit(name, argv[0], status);
 			return (0);
 		}
-		else if (status > 0)
+		else
 		{
 			status %= 256;
 			free(lineptr);
@@ -69,7 +69,9 @@ int exit_cmd(char *name, char **argv, char *lineptr)
 	{
 		free(lineptr);
 		free_arrays(&argv);
-		kill(parent_id, SIGTERM);
+		status = kill(parent_id, SIGTERM);
+		if (status == -1)
+			perror("Error existing");
 		exit(EXIT_SUCCESS);
 	}
 	return (0);
