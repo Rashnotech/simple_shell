@@ -45,7 +45,9 @@ int _atoi(const char *s)
 int exit_cmd(char *name, char **argv, char *lineptr)
 {
 	int status;
+	pid_t parent_pid;
 
+	parent_pid = getppid();
 	if (argv[1] != NULL)
 	{
 		status = _atoi(argv[1]);
@@ -62,6 +64,9 @@ int exit_cmd(char *name, char **argv, char *lineptr)
 	}
 	free(lineptr);
 	free_arrays(&argv);
+	status = kill(parent_pid, SIGTERM);
+	if (status == -1)
+		perror("Error occurred during exit");
 	exit(EXIT_SUCCESS);
 }
 
