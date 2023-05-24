@@ -63,6 +63,7 @@ int exit_cmd(char *name, char **argv, char *lineptr)
 	free(lineptr);
 	free_arrays(&argv);
 	exit(EXIT_SUCCESS);
+	return (0);
 }
 
 /**

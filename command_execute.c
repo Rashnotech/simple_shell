@@ -25,6 +25,6 @@ int command_execute(char **argv, char *name)
 	else if (my_pid == 0)
 		execve(full_path, argv, environ);
 	else
-		waitpid(my_pid, &status, 0);
+		wait(&status);
 	return (status);
 }
