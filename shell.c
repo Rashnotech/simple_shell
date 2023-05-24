@@ -99,7 +99,8 @@ int in_built(char *name, char **argv, char *lineptr, int argc)
 		change_dir(argv[1]);
 	else
 		return (-1);
-	status = clean_up(argv, lineptr, argc);
+	if (argc > 1)
+		status = clean_up(argv, lineptr, argc);
 	return (status);
 }
 

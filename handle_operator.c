@@ -22,9 +22,13 @@ int handle_operators(char *input, char *name, ssize_t no_char,
 	{
 		tokenizer(token, &argv, no_char);
 		token = _strtok(NULL, delim);
-
 		if (argv[0] == NULL)
+		{
+			free(input_copy);
 			continue;
+		}
+		if (my_strcmp(argv[0], "exit") == 0)
+			free(input_copy);
 		if (in_built(name, argv, input, argc) == 0)
 			continue;
 		ret = command_execute(argv, name);
@@ -37,4 +41,3 @@ int handle_operators(char *input, char *name, ssize_t no_char,
 	free(input);
 	return (0);
 }
-
