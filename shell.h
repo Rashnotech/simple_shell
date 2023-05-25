@@ -50,7 +50,7 @@ int my_strncmp(const char *s1, const char *s2, size_t n);
 char *_strchr(char *str, char c);
 char *_strstr(char *haystack, char *needle);
 char *_strncpy(char *dest, char *src, int n);
-
+int _strspn(char *s, char *accept);
 /********************HANDLE ERROR********************/
 int error_putchar(char c);
 void error_puts(const char *str);
@@ -78,7 +78,7 @@ void file_handler(char *file, char *programe_name, int argc);
 
 /********************EXIT FUNCTIONS*****************/
 void normal_exit(int errorcode);
-int handle_exit(char *name, char *cmd, int code);
+int handle_exit(char *name, char *cmd, char *code);
 
 void non_interactive(char *name, int argc);
 

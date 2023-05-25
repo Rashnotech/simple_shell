@@ -30,7 +30,7 @@ int handle_error(char *name, char *cmd)
  * @cmd: command argument
  * @code: status code
  */
-int handle_exit(char *name, char *cmd, int code)
+int handle_exit(char *name, char *cmd, char *code)
 {
 	static int i = 1;
 
@@ -45,7 +45,7 @@ int handle_exit(char *name, char *cmd, int code)
 	error_puts(" Illegal number");
 	error_putchar(':');
 	error_putchar(' ');
-	errorput_number(code);
+	error_puts(code);
 	error_putchar('\n');
 	i++;
 	return (2);

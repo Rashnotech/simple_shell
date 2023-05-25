@@ -50,19 +50,27 @@ int exit_cmd(char *name, char **argv, char *lineptr, int code)
 	parent_id = getppid();
 	if (argv[1] != NULL)
 	{
-		status = _atoi(argv[1]);
-		if (status < 0)
+		if (_strspn(argv[1], "0123456789") != my_strlen(argv[1]))
 		{
-			code = handle_exit(name, argv[0], status);
+			code = handle_exit(name, argv[0], argv[1]);
 			return (code);
 		}
 		else
 		{
-			status %= 256;
-			free(lineptr);
-			free_arrays(&argv);
-			kill(parent_id, SIGTERM);
-			exit(status);
+			status = _atoi(argv[1]);
+			if (status < 0)
+			{
+				code = handle_exit(name, argv[0], argv[1]);
+				return (code);
+			}
+			else
+			{
+				status %= 256;
+				free(lineptr);
+				free_arrays(&argv);
+				kill(parent_id, SIGTERM);
+				exit(status);
+			}
 		}
 	}
 	free(lineptr);
@@ -87,4 +95,32 @@ int clean_up(char **argv, char *lineptr, int argc)
 		free(lineptr);
 	free_arrays(&argv);
 	return (0);
+}
+
+/**
+ * _strspn - find the position of a substring
+ * @s: string of characters
+ * @accept: substring to check position
+ *
+ * Return: an integer value of the found substring position
+ */
+int _strspn(char *s, char *accept)
+{
+	int i = 0, j;
+
+	while (*s != '\0')
+	{
+		for (j = 0; accept[j]; j++)
+		{
+			if (*s == accept[j])
+			{
+				i++;
+				break;
+			}
+			else if (accept[j + 1] == '\0')
+				return (i);
+		}
+		s++;
+	}
+	return (i);
 }
