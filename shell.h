@@ -13,6 +13,8 @@
 #include <sys/wait.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <errno.h>
+
 
 extern char **environ;
 char *my_getpath(char *cmd);
@@ -77,5 +79,7 @@ void file_handler(char *file, char *programe_name, int argc);
 /********************EXIT FUNCTIONS*****************/
 void normal_exit(int errorcode);
 void handle_exit(char *name, char *cmd, int code);
+
+void non_interactive(char *name, int argc);
 
 #endif

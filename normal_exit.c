@@ -7,8 +7,9 @@
  */
 void normal_exit(int errorcode)
 {
-	if (errorcode == 1)
-		exit(EXIT_FAILURE);
+	(void)errorcode;
+	if (errorcode)
+		exit(2);
 	else
-		exit(EXIT_SUCCESS);
+		exit(0);
 }

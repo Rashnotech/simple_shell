@@ -13,6 +13,8 @@ int main(int argc, char **av)
 	signal(SIGINT, signalHandle);
 	if (argc > 1)
 		file_handler(file, programe_name, argc);
+	if (!isatty(STDIN_FILENO))
+		non_interactive(programe_name, argc);
 	while (1)
 	{
 		ssize_t no_char = 0;

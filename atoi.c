@@ -71,6 +71,7 @@ int exit_cmd(char *name, char **argv, char *lineptr)
 	if (status == -1)
 		perror("Error occurred during exit");
 	exit(EXIT_SUCCESS);
+	return (0);
 }
 
 /**

@@ -14,15 +14,7 @@ int command_execute(char **argv, char *name)
 	pid_t my_pid;
 
 	full_path = my_getpath(argv[0]);
-	if (full_path != NULL)
-	{
-		if (my_strcmp(full_path, argv[0]) != 0)
-		{
-			free(argv[0]);
-			argv[0] = full_path;
-		}
-	}
-	else
+	if (full_path == NULL)
 	{
 		handle_error(name, argv[0]);
 		return (1);
@@ -31,8 +23,8 @@ int command_execute(char **argv, char *name)
 	if (my_pid == -1)
 		perror("Error: ");
 	else if (my_pid == 0)
-		execve(argv[0], argv, environ);
+		execve(full_path, argv, environ);
 	else
-		waitpid(my_pid, &status, 0);
+		wait(&status);
 	return (status);
 }
