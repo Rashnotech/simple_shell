@@ -67,7 +67,10 @@ int continue_main(char *input, char **argv, char *name,
 	tokenizer(input, &argv, no_char);
 	if (argv[0] == NULL)
 		return (0);
-	if (in_built(name, argv, input, argc, code) == 0)
+	errorcode = in_built(name, argv, input, argc, code);
+	if (errorcode == 0)
+		return (0);
+	else if (errorcode == 2)
 		return (0);
 	errorcode = command_execute(argv, name);
 	free(input);

@@ -48,5 +48,5 @@ int handle_exit(char *name, char *cmd, int code)
 	errorput_number(code);
 	error_putchar('\n');
 	i++;
-	return (127);
+	return (2);
 }

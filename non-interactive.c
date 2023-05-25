@@ -28,7 +28,10 @@ void non_interactive(char *name, int argc)
 			token = _strtok(NULL, "\n");
 			if (argv[0] == NULL)
 				continue;
-			if (in_built(name, argv, input, argc, errorcode) == 0)
+			errorcode = in_built(name, argv, input, argc, errorcode);
+			if (errorcode == 0)
+				continue;
+			else if (errorcode == 2)
 				continue;
 			errorcode = command_execute(argv, name);
 			free_arrays(&argv);

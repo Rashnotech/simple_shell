@@ -53,8 +53,8 @@ int exit_cmd(char *name, char **argv, char *lineptr, int code)
 		status = _atoi(argv[1]);
 		if (status < 0)
 		{
-			handle_exit(name, argv[0], status);
-			return (0);
+			code = handle_exit(name, argv[0], status);
+			return (code);
 		}
 		else
 		{
