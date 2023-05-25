@@ -17,11 +17,11 @@ int tokenizer(char *command, char ***argv, ssize_t num_chars)
 	if (command_copy == NULL)
 		exit(-1);
 	my_strcpy(command_copy, command);
-	token = strtok(command_copy, delim);
+	token = my_strtok(command_copy, delim);
 	while (token != NULL)
 	{
 		numOf_tokens++;
-		token = strtok(NULL, delim);
+		token = my_strtok(NULL, delim);
 	}
 	numOf_tokens += 2;
 	*argv = malloc(sizeof(char *) * numOf_tokens);
@@ -30,12 +30,12 @@ int tokenizer(char *command, char ***argv, ssize_t num_chars)
 		exit(-1);
 	}
 
-	token = strtok(command, delim);
+	token = my_strtok(command, delim);
 	for (i = 0; token != NULL && token[0] != '#'; i++)
 	{
 		(*argv)[i] = malloc(sizeof(char) * (my_strlen(token) + 1));
 		my_strcpy((*argv)[i], token);
-		token = strtok(NULL, delim);
+		token = my_strtok(NULL, delim);
 	}
 	(*argv)[i] = NULL;
 	(*argv)[++i] = NULL;
