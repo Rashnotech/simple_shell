@@ -4,6 +4,8 @@
  * handle_error - print errors
  * @name: name of the programe
  * @cmd: the command passed command
+ *
+ * Return: an integer value
  */
 int handle_error(char *name, char *cmd)
 {
@@ -29,6 +31,7 @@ int handle_error(char *name, char *cmd)
  * @name: program name
  * @cmd: command argument
  * @code: status code
+ * Return: an integer value
  */
 int handle_exit(char *name, char *cmd, char *code)
 {

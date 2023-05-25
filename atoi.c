@@ -39,6 +39,7 @@ int _atoi(const char *s)
  * @name: name for program
  * @argv: argument vector
  * @lineptr: line pointer
+ * @code: status error code
  *
  * Return: an integer value of 0 otherwise -1
  */

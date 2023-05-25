@@ -56,6 +56,7 @@ int main(int argc, char **av)
  * @name: program name
  * @no_char: no of char read as input
  * @argc: argument count
+ * @code: status error code
  * Return: 0 at success
  */
 
@@ -84,6 +85,7 @@ int continue_main(char *input, char **argv, char *name,
  * @argv: the command enterd
  * @lineptr: lineptr
  * @argc: argument counter
+ * @code: status error code
  * Return: 0 on if command is a built in
  */
 int in_built(char *name, char **argv, char *lineptr, int argc, int code)

@@ -7,6 +7,7 @@
  * @no_char: number of characters
  * @argc: argument counter
  * @delim: delimeters
+ * @code: status error code
  * Return: an integer value of 0 otherwise -1
  */
 int handle_operators(char *input, char *name, ssize_t no_char,

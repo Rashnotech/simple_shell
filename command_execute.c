@@ -16,7 +16,7 @@ int command_execute(char **argv, char *name)
 	full_path = my_getpath(argv[0]);
 	if (full_path == NULL)
 		err = handle_error(name, argv[0]);
-	else 
+	else
 	{
 		my_pid = fork();
 		if (my_pid == -1)
