@@ -8,9 +8,8 @@
 void normal_exit(int errorcode)
 {
 	(void)errorcode;
-/*	if (errorcode)
+	if (errorcode)
 		exit(2);
 	else
-		exit(6);*/
-	return;
+		exit(0);
 }

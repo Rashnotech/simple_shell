@@ -2,6 +2,9 @@
 
 /**
  * non_interactive - non interactive mood
+ * @argc: argument co nt
+ * @name: nameif proht
+ * Return: void
  */
 
 void non_interactive(char *name, int argc)
