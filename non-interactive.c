@@ -12,7 +12,7 @@ void non_interactive(char *name, int argc)
 	ssize_t no_char = 0;
 	char *input = NULL, **argv, *token, *delim;
 	size_t n;
-	int errorcode;
+	int errorcode, error;
 
 	no_char = _getline(&input, &n, STDIN_FILENO);
 	delim = _strchr(input, ';') != NULL ? ";" : _strstr(input, "&&")
@@ -35,5 +35,6 @@ void non_interactive(char *name, int argc)
 		}
 		free(input);
 	}
-	exit(errorcode);
+	error = errorcode != 0 ? 2 : 0; 
+	exit(error);
 }
