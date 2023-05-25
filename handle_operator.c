@@ -41,5 +41,6 @@ int handle_operators(char *input, char *name, ssize_t no_char,
 		free_arrays(&argv);
 	}
 	free(input);
+	free(input_copy);
 	return (ret);
 }
