@@ -5,7 +5,7 @@
  * @name: name of the programe
  * @cmd: the command passed command
  */
-void handle_error(char *name, char *cmd)
+int handle_error(char *name, char *cmd)
 {
 	static int i = 1;
 
@@ -21,7 +21,7 @@ void handle_error(char *name, char *cmd)
 	error_puts("not found");
 	error_putchar('\n');
 	i++;
-
+	return (127);
 }
 
 /**
@@ -30,7 +30,7 @@ void handle_error(char *name, char *cmd)
  * @cmd: command argument
  * @code: status code
  */
-void handle_exit(char *name, char *cmd, int code)
+int handle_exit(char *name, char *cmd, int code)
 {
 	static int i = 1;
 
@@ -48,4 +48,5 @@ void handle_exit(char *name, char *cmd, int code)
 	errorput_number(code);
 	error_putchar('\n');
 	i++;
+	return (127);
 }

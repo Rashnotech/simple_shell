@@ -10,7 +10,7 @@
  * Return: an integer value of 0 otherwise -1
  */
 int handle_operators(char *input, char *name, ssize_t no_char,
-		int argc, char *delim)
+		int argc, char *delim, int code)
 {
 	char **argv = NULL, *token, *input_copy = NULL;
 	int ret;
@@ -31,7 +31,7 @@ int handle_operators(char *input, char *name, ssize_t no_char,
 		}
 		if (my_strcmp(argv[0], "exit") == 0)
 			free(input_copy);
-		if (in_built(name, argv, input, argc) == 0)
+		if (in_built(name, argv, input, argc, code) == 0)
 			continue;
 		ret = command_execute(argv, name);
 		if ((ret != 0 && my_strcmp(delim, "&&") == 0)
@@ -40,5 +40,6 @@ int handle_operators(char *input, char *name, ssize_t no_char,
 		free_arrays(&argv);
 	}
 	free(input);
+	free(input_copy);
 	return (ret);
 }

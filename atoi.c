@@ -42,7 +42,7 @@ int _atoi(const char *s)
  *
  * Return: an integer value of 0 otherwise -1
  */
-int exit_cmd(char *name, char **argv, char *lineptr)
+int exit_cmd(char *name, char **argv, char *lineptr, int code)
 {
 	int status;
 	pid_t parent_id;
@@ -67,10 +67,10 @@ int exit_cmd(char *name, char **argv, char *lineptr)
 	}
 	free(lineptr);
 	free_arrays(&argv);
-	status = kill(parent_id, SIGTERM);
-	if (status == -1)
-		perror("Error occurred during exit");
-	exit(EXIT_SUCCESS);
+	kill(parent_id, SIGTERM);
+	if (code != 127 && code != 0)
+		code = 2;
+	exit(code);
 	return (0);
 }
 

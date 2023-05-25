@@ -12,13 +12,13 @@ void non_interactive(char *name, int argc)
 	ssize_t no_char = 0;
 	char *input = NULL, **argv, *token, *delim;
 	size_t n;
-	int errorcode, error;
+	int errorcode = 0;
 
 	no_char = _getline(&input, &n, STDIN_FILENO);
 	delim = _strchr(input, ';') != NULL ? ";" : _strstr(input, "&&")
-		!= NULL ? "&&" : _strstr(input, "||") != NULL ? "||" : "";
+		!= NULL ? "&&" : _strstr(input, "||") != NULL ? "||" : NULL;
 	if (delim)
-		errorcode = handle_operators(input, name, no_char, argc, delim);
+		errorcode = handle_operators(input, name, no_char, argc, delim, errorcode);
 	else
 	{
 		token = _strtok(input, "\n");
@@ -28,13 +28,14 @@ void non_interactive(char *name, int argc)
 			token = _strtok(NULL, "\n");
 			if (argv[0] == NULL)
 				continue;
-			if (in_built(name, argv, input, argc) == 0)
+			if (in_built(name, argv, input, argc, errorcode) == 0)
 				continue;
 			errorcode = command_execute(argv, name);
 			free_arrays(&argv);
 		}
 		free(input);
 	}
-	error = errorcode != 0 ? 2 : 0; 
-	exit(error);
+	if (errorcode != 127 && errorcode != 0)
+		errorcode = 2;
+	exit(errorcode);
 }
