@@ -125,3 +125,28 @@ int _strspn(char *s, char *accept)
 	}
 	return (i);
 }
+
+/**
+ * _strcspn - find the position of rejected substring
+ * @s: string of characters
+ * @reject: substring to check
+ * Return: an integer value of the reject substring position
+ */
+int _strcspn(char *s, char *reject)
+{
+	char *str = s;
+	int i = 0;
+
+	while (*str)
+	{
+		while (*reject)
+		{
+			if (*str == *reject)
+				return (i);
+			reject++;
+		}
+		str++;
+		i++;
+	}
+	return (i);
+}

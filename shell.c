@@ -36,7 +36,7 @@ int main(int argc, char **av)
 			continue;
 		}
 		delim = _strchr(input, ';') != NULL ? ";" : _strstr(input, "&&")
-			!= NULL ? "&&" : _strstr(input, "||") != NULL ? "||" : NULL;
+			!= NULL || _strstr(input, "||") != NULL ? "&&||" : NULL;
 		if (delim)
 		{
 			err = handle_operators(input, programe_name, no_char, argc, delim, err);

@@ -51,6 +51,7 @@ char *_strchr(char *str, char c);
 char *_strstr(char *haystack, char *needle);
 char *_strncpy(char *dest, char *src, int n);
 int _strspn(char *s, char *accept);
+int _strcspn(char *s, char *reject);
 /********************HANDLE ERROR********************/
 int error_putchar(char c);
 void error_puts(const char *str);

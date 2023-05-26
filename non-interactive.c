@@ -16,7 +16,7 @@ void non_interactive(char *name, int argc)
 
 	no_char = _getline(&input, &n, STDIN_FILENO);
 	delim = _strchr(input, ';') != NULL ? ";" : _strstr(input, "&&")
-		!= NULL ? "&&" : _strstr(input, "||") != NULL ? "||" : NULL;
+		!= NULL || _strstr(input, "||") != NULL ? "||&&" : NULL;
 	if (delim)
 		errorcode = handle_operators(input, name, no_char, argc, delim, errorcode);
 	else

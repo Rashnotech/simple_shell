@@ -14,16 +14,17 @@ int handle_operators(char *input, char *name, ssize_t no_char,
 		int argc, char *delim, int code)
 {
 	char **argv = NULL, *token, *input_copy = NULL;
-	int ret;
+	int ret, opand = 0, opor = 0;
 
 	argc = 2;
 	input_copy = my_strdup(input);
+	opand = _strstr(input, "&&") != NULL ? 1 : 0;
+	opor = _strstr(input, "||") != NULL ? 2 : 0;
 	token = _strtok(input_copy, delim);
 	while (token != NULL)
 	{
 		tokenizer(token, &argv, no_char);
 		token = _strtok(NULL, delim);
-
 		if (argv[0] == NULL)
 		{
 			free(argv);
@@ -35,12 +36,21 @@ int handle_operators(char *input, char *name, ssize_t no_char,
 		if (in_built(name, argv, input, argc, code) == 0)
 			continue;
 		ret = command_execute(argv, name);
-		if ((ret != 0 && my_strcmp(delim, "&&") == 0)
-				|| (ret == 0 && my_strcmp(delim, "||") == 0))
-			break;
+		if (opand && opor)
+		{
+			if ((ret != 0 && my_strcmp(token, "||") == 0)
+					|| (ret == 0 && my_strcmp(token, "&&") == 0))
+				continue;
+		}
+		else
+		{
+			if ((ret != 0 && opand == 1)
+				|| (ret == 0 && opor == 2))
+				break;
+		}
 		free_arrays(&argv);
 	}
-	free(input);
 	free(input_copy);
+	free(input);
 	return (ret);
 }
