@@ -13,13 +13,15 @@
 #include <sys/wait.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <errno.h>
+
 
 extern char **environ;
 char *my_getpath(char *cmd);
 int tokenizer(char *command, char ***argv, ssize_t num_char);
 int command_execute(char **argv, char *name);
-int continue_main(char *input, char **argv,
-		char *name, size_t no_char, int argc);
+int continue_main(char *input, char **argv, char *name,
+		size_t no_char, int argc, int code);
 
 /***************EMVIRONMENT FUNCTIONS***************/
 int my_unsetenv(char *var_name);
@@ -48,34 +50,37 @@ int my_strncmp(const char *s1, const char *s2, size_t n);
 char *_strchr(char *str, char c);
 char *_strstr(char *haystack, char *needle);
 char *_strncpy(char *dest, char *src, int n);
-
+int _strspn(char *s, char *accept);
+int _strcspn(char *s, char *reject);
 /********************HANDLE ERROR********************/
 int error_putchar(char c);
 void error_puts(const char *str);
 int errorput_number(int i);
-void handle_error(char *name, char *cmd);
+int handle_error(char *name, char *cmd);
 
 /*****************ADVANCED FUNCTIONS****************/
 ssize_t _getline(char **lineptr, size_t *n, int fd);
 size_t _readline(char **lineptr, size_t *n, char buffer[], int fd, int size);
 char *_strtok(char *str, const char *delim);
-int handle_operators(char *input, char *name,
-		ssize_t no_char, int argc, char *delim);
+int handle_operators(char *input, char *name, ssize_t no_char,
+		int argc, char *delim, int code);
 char *my_strtok(char *str, const char *delim);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 size_t my_strspn(char *str, const char *delim);
 size_t my_strcspn(char *str, const char *delim);
 void free_arrays(char ***av);
 int clean_up(char **argv, char *lineptr, int argc);
-int exit_cmd(char *name, char **argv, char *lineptr);
+int exit_cmd(char *name, char **argv, char *lineptr, int status);
 /***************IN_BUILT FUNCTIONS***************/
-int in_built(char *name, char **argv, char *lineptr, int argc);
+int in_built(char *name, char **argv, char *lineptr, int argc, int code);
 void change_dir(char *dir);
 void signalHandle(int signum);
 void file_handler(char *file, char *programe_name, int argc);
 
 /********************EXIT FUNCTIONS*****************/
 void normal_exit(int errorcode);
-void handle_exit(char *name, char *cmd, int code);
+int handle_exit(char *name, char *cmd, char *code);
+
+void non_interactive(char *name, int argc);
 
 #endif

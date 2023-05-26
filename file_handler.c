@@ -9,7 +9,7 @@
 void file_handler(char *file, char *programe_name, int argc)
 {
 	char *token = NULL, *input, **argv;
-	int fd, errorcode;
+	int fd, err = 0;
 	ssize_t no_char;
 
 	fd = open(file, O_RDONLY);
@@ -29,11 +29,11 @@ void file_handler(char *file, char *programe_name, int argc)
 		token = _strtok(NULL, "\n");
 		if (argv[0] == NULL)
 			continue;
-		if (in_built(programe_name, argv, input, argc) == 0)
+		if (in_built(programe_name, argv, input, argc, err) == 0)
 			continue;
-		errorcode = command_execute(argv, programe_name);
+		err = command_execute(argv, programe_name);
 		free_arrays(&argv);
 	}
 	free(input);
-	normal_exit(errorcode);
+	normal_exit(err);
 }

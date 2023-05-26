@@ -8,11 +8,13 @@
 int main(int argc, char **av)
 {
 	char *programe_name = av[0], *file = av[1], *input, *delim;
-	int errorcode = 0, fd;
+	int err = 0, fd;
 
 	signal(SIGINT, signalHandle);
 	if (argc > 1)
 		file_handler(file, programe_name, argc);
+	if (!isatty(STDIN_FILENO))
+		non_interactive(programe_name, argc);
 	while (1)
 	{
 		ssize_t no_char = 0;
@@ -29,19 +31,21 @@ int main(int argc, char **av)
 		if (no_char == 1 || my_strcmp(input, " ") == 0)
 		{
 			free(input);
+			if (!isatty(STDIN_FILENO))
+				break;
 			continue;
 		}
 		delim = _strchr(input, ';') != NULL ? ";" : _strstr(input, "&&")
-			!= NULL ? "&&" : _strstr(input, "||") != NULL ? "||" : "";
+			!= NULL || _strstr(input, "||") != NULL ? "&&||" : NULL;
 		if (delim)
 		{
-			handle_operators(input, programe_name, no_char, argc, delim);
+			err = handle_operators(input, programe_name, no_char, argc, delim, err);
 			continue;
 		}
 
-		errorcode = continue_main(input, av, programe_name, no_char, argc);
+		err = continue_main(input, av, programe_name, no_char, argc, err);
 	}
-	normal_exit(errorcode);
+	normal_exit(err);
 	return (0);
 }
 
@@ -52,18 +56,22 @@ int main(int argc, char **av)
  * @name: program name
  * @no_char: no of char read as input
  * @argc: argument count
+ * @code: status error code
  * Return: 0 at success
  */
 
 int continue_main(char *input, char **argv, char *name,
-		size_t no_char, int argc)
+		size_t no_char, int argc, int code)
 {
 	int errorcode;
 
 	tokenizer(input, &argv, no_char);
 	if (argv[0] == NULL)
 		return (0);
-	if (in_built(name, argv, input, argc) == 0)
+	errorcode = in_built(name, argv, input, argc, code);
+	if (errorcode == 0)
+		return (0);
+	else if (errorcode == 2)
 		return (0);
 	errorcode = command_execute(argv, name);
 	free(input);
@@ -77,16 +85,17 @@ int continue_main(char *input, char **argv, char *name,
  * @argv: the command enterd
  * @lineptr: lineptr
  * @argc: argument counter
+ * @code: status error code
  * Return: 0 on if command is a built in
  */
-int in_built(char *name, char **argv, char *lineptr, int argc)
+int in_built(char *name, char **argv, char *lineptr, int argc, int code)
 {
-	int status;
+	int status = 0;
 	(void)argc;
 
 	if (my_strcmp(argv[0], "exit") == 0)
 	{
-		status = exit_cmd(name, argv, lineptr);
+		status = exit_cmd(name, argv, lineptr, code);
 		return (status);
 	}
 	else if (my_strcmp(argv[0], "env") == 0)
