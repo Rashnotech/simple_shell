@@ -27,6 +27,5 @@ int command_execute(char **argv, char *name)
 			wait(&status);
 		err = status;
 	}
-	free(full_path);
 	return (err);
 }
