@@ -17,7 +17,8 @@ int main(int argc, char **av)
 	signal(SIGINT, signalHandle);
 	while (1)
 	{
-		print_prompt();
+		if (shell->is_interactive)
+			print_prompt();
 		input = get_input(shell->fd, &no_char);
 		check = check_input(shell, no_char, input);
 		if (check == -1)
