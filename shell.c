@@ -28,7 +28,6 @@ int main(int argc, char **av)
 
 		continue_main(shell, input, no_char);
 	}
-	normal_exit(shell->error_code);
 	return (0);
 }
 
@@ -70,7 +69,7 @@ int continue_main(shell_t *shell, char *input, size_t no_char)
 		{
 			code = in_built(shell, command, input);
 
-			if (code == 0 || code == 2)
+			if (code == 0)
 				continue;
 			code = command_execute(command, shell->argv[0]);
 			shell->error_code = code;
@@ -78,7 +77,7 @@ int continue_main(shell_t *shell, char *input, size_t no_char)
 
 	}
 	free(input);
-	free_command(shell, commands);
+	/*free_command(shell, commands);*/
 	shell->error_code = code;
 	return (shell->error_code);
 }
@@ -110,8 +109,6 @@ int in_built(shell_t *shell, char **argv, char *lineptr)
 		change_dir(argv[1]);
 	else
 		return (-1);
-	if (shell->argc > 1)
-		shell->error_code = clean_up(argv, lineptr, shell->argc);
 	return (status);
 }
 
