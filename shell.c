@@ -45,6 +45,7 @@ int continue_main(shell_t *shell, char *input, size_t no_char)
 	int i, can_execute = 1;
 
 	commands = tokenizer(shell, input, no_char);
+	shell->commands = commands;
 	free(input);
 	if (commands == NULL || commands[0] == NULL || commands[0][0] == NULL)
 		return (0);
