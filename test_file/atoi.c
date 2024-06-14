@@ -39,35 +39,48 @@ int _atoi(const char *s)
  * @name: name for program
  * @argv: argument vector
  * @lineptr: line pointer
+ * @code: status error code
  *
  * Return: an integer value of 0 otherwise -1
  */
-int exit_cmd(char *name, char **argv, char *lineptr)
+int exit_cmd(char *name, char **argv, char *lineptr, int code)
 {
 	int status;
-	pid_t parent_pid;
+	pid_t parent_id;
 
-	parent_pid = getppid();
+	parent_id = getppid();
 	if (argv[1] != NULL)
 	{
-		status = _atoi(argv[1]);
-		if (status < 0)
+		if (_strspn(argv[1], "0123456789") != my_strlen(argv[1]))
 		{
-			handle_exit(name, argv[0], status);
-			return (0);
+			code = handle_exit(name, argv[0], argv[1]);
+			return (code);
 		}
 		else
-			status %= 256;
-		free(lineptr);
-		free_arrays(&argv);
-		exit(status);
+		{
+			status = _atoi(argv[1]);
+			if (status < 0)
+			{
+				code = handle_exit(name, argv[0], argv[1]);
+				return (code);
+			}
+			else
+			{
+				status %= 256;
+				free(lineptr);
+				free_arrays(&argv);
+				kill(parent_id, SIGTERM);
+				exit(status);
+			}
+		}
 	}
 	free(lineptr);
 	free_arrays(&argv);
-	status = kill(parent_pid, SIGTERM);
-	if (status == -1)
-		perror("Error occurred during exit");
-	exit(EXIT_SUCCESS);
+	kill(parent_id, SIGTERM);
+	if (code != 127 && code != 0)
+		code = 2;
+	exit(code);
+	return (0);
 }
 
 /**
@@ -83,4 +96,57 @@ int clean_up(char **argv, char *lineptr, int argc)
 		free(lineptr);
 	free_arrays(&argv);
 	return (0);
+}
+
+/**
+ * _strspn - find the position of a substring
+ * @s: string of characters
+ * @accept: substring to check position
+ *
+ * Return: an integer value of the found substring position
+ */
+int _strspn(char *s, char *accept)
+{
+	int i = 0, j;
+
+	while (*s != '\0')
+	{
+		for (j = 0; accept[j]; j++)
+		{
+			if (*s == accept[j])
+			{
+				i++;
+				break;
+			}
+			else if (accept[j + 1] == '\0')
+				return (i);
+		}
+		s++;
+	}
+	return (i);
+}
+
+/**
+ * _strcspn - find the position of rejected substring
+ * @s: string of characters
+ * @reject: substring to check
+ * Return: an integer value of the reject substring position
+ */
+int _strcspn(char *s, char *reject)
+{
+	char *str = s;
+	int i = 0;
+
+	while (*str)
+	{
+		while (*reject)
+		{
+			if (*str == *reject)
+				return (i);
+			reject++;
+		}
+		str++;
+		i++;
+	}
+	return (i);
 }

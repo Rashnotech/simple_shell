@@ -2,20 +2,21 @@
 
 /**
  * command_execute - for executing commands
+ * @shell: shell info
  * @argv: array of strings
- * @name: the progamme name
+ *
  * Return: 0 on success and 1 on failure
  */
 
-int command_execute(char **argv, char *name)
+void command_execute(shell_t *shell, char **argv)
 {
 	char *full_path;
-	int status, err;
+	int status;
 	pid_t my_pid;
 
 	full_path = my_getpath(argv[0]);
 	if (full_path == NULL)
-		err = handle_error(name, argv[0]);
+		shell->error_code = handle_error(shell->argv[0], argv[0]);
 	else
 	{
 		my_pid = fork();
@@ -25,8 +26,8 @@ int command_execute(char **argv, char *name)
 			execve(full_path, argv, environ);
 		else
 			wait(&status);
-		err = status;
+		shell->error_code = status;
 	}
-	free(full_path);
-	return (err);
+	if (access(argv[0], X_OK) == -1)
+		free(full_path);
 }

@@ -12,7 +12,6 @@
 
 int check_input(shell_t *shell, size_t no_char, char *input)
 {
-	(void) input;
 	if (no_char == (size_t) -1)
 	{
 		free(input);

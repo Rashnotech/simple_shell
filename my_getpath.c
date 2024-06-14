@@ -14,9 +14,8 @@ char *my_getpath(char *cmd)
 	if (cmd == NULL)
 		return (NULL);
 	if (access(cmd, X_OK) != -1)
-	{
 		return (cmd);
-	}
+
 	paths_1 = my_getenv("PATH");
 	if (paths_1 == NULL)
 		return (NULL);
@@ -25,7 +24,7 @@ char *my_getpath(char *cmd)
 
 	while (token != NULL)
 	{
-		full_path = malloc((my_strlen(token) + my_strlen(cmd) + 2) * sizeof(char));
+		full_path = malloc(sizeof(char) * (my_strlen(token) + my_strlen(cmd) + 2));
 		if (full_path != NULL)
 		{
 			my_strcpy(full_path, token);

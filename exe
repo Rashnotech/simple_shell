@@ -1,3 +1,1 @@
-/bin/ls 
-ls -a
-env
+shell_input="./hbtn_ls /var"

@@ -1,4 +1,5 @@
 #include "shell.h"
+
 /**
  * main -This is the Entry point
  * @argc: argument counts
@@ -7,86 +8,95 @@
  */
 int main(int argc, char **av)
 {
-	char *programe_name = av[0], *file = av[1], *input, *delim;
-	int errorcode = 0, fd;
+	shell_t shell_info = {0}, *shell = &shell_info;
+	char *input;
+	int  check;
+	ssize_t no_char = 0;
 
+	initialize(shell, argc, av);
 	signal(SIGINT, signalHandle);
-	if (argc > 1)
-		file_handler(file, programe_name, argc);
 	while (1)
 	{
-		ssize_t no_char = 0;
-
-		fd = print_prompt(argc);
-		input = get_input(fd, &no_char);
-		if (no_char == -1)
-		{
-			free(input);
-			if (isatty(STDIN_FILENO))
-				my_putchar('\n');
+		print_prompt();
+		input = get_input(shell->fd, &no_char);
+		check = check_input(shell, no_char, input);
+		if (check == -1)
 			break;
-		}
-		if (no_char == 1 || my_strcmp(input, " ") == 0)
-		{
-			free(input);
+		if (check == 1)
 			continue;
-		}
-		delim = _strchr(input, ';') != NULL ? ";" : _strstr(input, "&&")
-			!= NULL ? "&&" : _strstr(input, "||") != NULL ? "||" : "";
-		if (delim)
-		{
-			handle_operators(input, programe_name, no_char, argc, delim);
-			continue;
-		}
 
-		errorcode = continue_main(input, av, programe_name, no_char, argc);
+		continue_main(shell, input, no_char);
 	}
-	normal_exit(errorcode);
+	normal_exit(shell->error_code);
 	return (0);
 }
 
 /**
  * continue_main - continue the maun funtion
+ * @shell: the shell information
  * @input: the command
- * @argv: the array of commands
- * @name: program name
  * @no_char: no of char read as input
- * @argc: argument count
  * Return: 0 at success
  */
 
-int continue_main(char *input, char **argv, char *name,
-		size_t no_char, int argc)
+int continue_main(shell_t *shell, char *input, size_t no_char)
 {
-	int errorcode;
+	char ***commands, **command;
+	int code = 0, i, can_execute = 1;
 
-	tokenizer(input, &argv, no_char);
-	if (argv[0] == NULL)
+	commands = tokenizer(shell, input, no_char);
+	if (commands == NULL || commands[0] == NULL || commands[0][0] == NULL)
 		return (0);
-	if (in_built(name, argv, input, argc) == 0)
-		return (0);
-	errorcode = command_execute(argv, name);
+
+	for (i = 0; i < shell->num_commands; i++)
+	{
+		command = commands[i];
+
+		if (my_strcmp(command[0], "&&") == 0)
+		{
+			if (code != 0 && i != 0)
+				can_execute = 0;
+			++command;
+		}
+
+		else if (my_strcmp(command[0], "||") == 0)
+		{
+			if (shell->error_code == 0 && i != 0)
+				can_execute = 0;
+			++command;
+		}
+		if (can_execute)
+		{
+			code = in_built(shell, command, input);
+
+			if (code == 0 || code == 2)
+				continue;
+			code = command_execute(command, shell->argv[0]);
+			shell->error_code = code;
+		}
+
+	}
 	free(input);
-	free_arrays(&argv);
-	return (errorcode);
+	free_command(shell, commands);
+	shell->error_code = code;
+	return (shell->error_code);
 }
 
 /**
  * in_built - check for built-in commands
- * @name: name of programe
+ * @shell: the shell information
  * @argv: the command enterd
  * @lineptr: lineptr
- * @argc: argument counter
  * Return: 0 on if command is a built in
  */
-int in_built(char *name, char **argv, char *lineptr, int argc)
+int in_built(shell_t *shell, char **argv, char *lineptr)
 {
-	int status;
-	(void)argc;
+	int status = 0;
 
 	if (my_strcmp(argv[0], "exit") == 0)
 	{
-		status = exit_cmd(name, argv, lineptr);
+		shell->error_code = exit_cmd(
+		shell->argv[0], argv, lineptr, shell->error_code);
 		return (status);
 	}
 	else if (my_strcmp(argv[0], "env") == 0)
@@ -99,23 +109,18 @@ int in_built(char *name, char **argv, char *lineptr, int argc)
 		change_dir(argv[1]);
 	else
 		return (-1);
-	if (argc > 1)
-		status = clean_up(argv, lineptr, argc);
+	if (shell->argc > 1)
+		shell->error_code = clean_up(argv, lineptr, shell->argc);
 	return (status);
 }
 
 /**
  * print_prompt - prints prompt depending on the mood
- * @argc: argumemt count
- * Return: file discriptor
+ * Return: void
  */
-int print_prompt(int argc)
+void print_prompt(void)
 {
-	int fd = STDIN_FILENO;
-
-	if (isatty(STDIN_FILENO) && argc == 1)
-		write(1, "$ ", 2);
-	return (fd);
+	write(1, "$ ", 2);
 }
 
 /**

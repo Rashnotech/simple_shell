@@ -27,6 +27,7 @@ extern char **environ;
  * @argv: char ** - command line arguments
  * @is_interactive: int - interactive
  * @file: char * - file name
+ * @commands: commands to be executed
  */
 
 typedef struct Shell
@@ -38,14 +39,17 @@ typedef struct Shell
 	char **argv;
 	int is_interactive;
 	char *file;
+	char ***commands;
 } shell_t;
 
 void *my_malloc(unsigned int size);
 
 char *my_getpath(char *cmd);
 char ***tokenizer(shell_t *shell, char *command, ssize_t num_char);
-int command_execute(char **argv, char *name);
+void command_execute(shell_t *shell, char **argv);
 int continue_main(shell_t *shell, char *input, size_t no_char);
+void print_prompt(void);
+char *get_input(shell_t *shell, ssize_t *no_char);
 
 /***************EMVIRONMENT FUNCTIONS***************/
 int my_unsetenv(char *var_name);
@@ -53,12 +57,10 @@ char *my_getenv(char *var_name);
 void my_environ(void);
 int my_setenv(char *var_name, char *value);
 int _setenv(char *name, char *value, int overwrite);
-void print_prompt(void);
-char *get_input(int fd, ssize_t *no_char);
 char *_getenv(const char *name);
-int _atoi(const char *s);
 
 /**********************WRITERS**********************/
+int _atoi(const char *s);
 int put_number(int i);
 int my_putchar(char c);
 void my_puts(const char *str);
@@ -83,8 +85,8 @@ int errorput_number(int i);
 int handle_error(char *name, char *cmd);
 
 /*****************ADVANCED FUNCTIONS****************/
-ssize_t _getline(char **lineptr, size_t *n, int fd);
-size_t _readline(char **lineptr, size_t *n, char buffer[], int fd, int size);
+ssize_t _getline(shell_t *shell, char **lineptr, size_t *n);
+size_t _readline(shell_t *shell, char **lineptr, size_t *n);
 char *_strtok(char *str, const char *delim);
 
 char *my_strtok(char *str, const char *delim);
@@ -92,12 +94,12 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 size_t my_strspn(char *str, const char *delim);
 size_t my_strcspn(char *str, const char *delim);
 void free_arrays(char ***av);
-void free_command(shell_t *shell, char ***command);
+void free_command(shell_t *shell);
 int clean_up(char **argv, char *lineptr, int argc);
-int exit_cmd(char *name, char **argv, char *lineptr, int status);
+int exit_cmd(shell_t *shell, char **argv);
 
-/***************IN_BUILT FUNCTIONS***************/
-int in_built(shell_t *shell, char **argv, char *lineptr);
+/***************BUILT IN FUNCTIONS***************/
+int built_in(shell_t *shell, char **argv);
 void change_dir(char *dir);
 void signalHandle(int signum);
 

@@ -36,16 +36,16 @@ int _atoi(const char *s)
 
 /**
  * exit_cmd - handle exit command
- * @name: name for program
+ * @shell: shell info
  * @argv: argument vector
- * @lineptr: line pointer
- * @code: status error code
  *
  * Return: an integer value of 0 otherwise -1
  */
-int exit_cmd(char *name, char **argv, char *lineptr, int code)
+int exit_cmd(shell_t *shell, char **argv)
 {
 	int status;
+	char *name = shell->argv[0];
+	int code = shell->error_code;
 	pid_t parent_id;
 
 	parent_id = getppid();
@@ -67,15 +67,13 @@ int exit_cmd(char *name, char **argv, char *lineptr, int code)
 			else
 			{
 				status %= 256;
-				free(lineptr);
-				free_arrays(&argv);
+				free_command(shell);
 				kill(parent_id, SIGTERM);
 				exit(status);
 			}
 		}
 	}
-	free(lineptr);
-	free_arrays(&argv);
+	free_command(shell);
 	kill(parent_id, SIGTERM);
 	if (code != 127 && code != 0)
 		code = 2;

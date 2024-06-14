@@ -2,14 +2,14 @@
 
 /**
  * free_command - frees all the commands in a single input
+ * @command: the commands to be freed
  * @shell: shell info
- *
  * Return: void
  */
 
-void free_command(shell_t *shell)
+void free_command(shell_t *shell, char ***command)
 {
-	char ***temp_c = shell->commands, **argv;
+	char ***temp_c = command, **argv;
 	int j;
 
 	(void) shell;
@@ -24,5 +24,5 @@ void free_command(shell_t *shell)
 		free(argv);
 	}
 
-	free(shell->commands);
+	free(command);
 }

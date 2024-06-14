@@ -19,7 +19,7 @@ int main(int argc, char **av)
 	{
 		if (shell->is_interactive)
 			print_prompt();
-		input = get_input(shell->fd, &no_char);
+		input = get_input(shell, &no_char);
 		check = check_input(shell, no_char, input);
 		if (check == -1)
 			break;
@@ -28,7 +28,7 @@ int main(int argc, char **av)
 
 		continue_main(shell, input, no_char);
 	}
-	return (0);
+	exit(shell->error_code);
 }
 
 /**
@@ -42,9 +42,10 @@ int main(int argc, char **av)
 int continue_main(shell_t *shell, char *input, size_t no_char)
 {
 	char ***commands, **command;
-	int code = 0, i, can_execute = 1;
+	int i, can_execute = 1;
 
 	commands = tokenizer(shell, input, no_char);
+	free(input);
 	if (commands == NULL || commands[0] == NULL || commands[0][0] == NULL)
 		return (0);
 
@@ -54,51 +55,42 @@ int continue_main(shell_t *shell, char *input, size_t no_char)
 
 		if (my_strcmp(command[0], "&&") == 0)
 		{
-			if (code != 0 && i != 0)
+			if (shell->error_code != 0)
 				can_execute = 0;
 			++command;
 		}
 
 		else if (my_strcmp(command[0], "||") == 0)
 		{
-			if (shell->error_code == 0 && i != 0)
+			if (shell->error_code == 0)
 				can_execute = 0;
 			++command;
 		}
 		if (can_execute)
 		{
-			code = in_built(shell, command, input);
-
-			if (code == 0)
+			if (built_in(shell, command) == 0)
 				continue;
-			code = command_execute(command, shell->argv[0]);
-			shell->error_code = code;
+			command_execute(shell, command);
 		}
 
 	}
-	free(input);
-	/*free_command(shell, commands);*/
-	shell->error_code = code;
+	free_command(shell);
 	return (shell->error_code);
 }
 
 /**
- * in_built - check for built-in commands
+ * built_in - check for built-in commands
  * @shell: the shell information
  * @argv: the command enterd
- * @lineptr: lineptr
+ *
  * Return: 0 on if command is a built in
  */
-int in_built(shell_t *shell, char **argv, char *lineptr)
+int built_in(shell_t *shell, char **argv)
 {
 	int status = 0;
 
 	if (my_strcmp(argv[0], "exit") == 0)
-	{
-		shell->error_code = exit_cmd(
-		shell->argv[0], argv, lineptr, shell->error_code);
-		return (status);
-	}
+		shell->error_code = exit_cmd(shell, argv);
 	else if (my_strcmp(argv[0], "env") == 0)
 		my_environ();
 	else if (my_strcmp(argv[0], "setenv") == 0)
@@ -108,7 +100,7 @@ int in_built(shell_t *shell, char **argv, char *lineptr)
 	else if (my_strcmp(argv[0], "cd") == 0)
 		change_dir(argv[1]);
 	else
-		return (-1);
+		return (1);
 	return (status);
 }
 
@@ -123,15 +115,17 @@ void print_prompt(void)
 
 /**
  * get_input - for getting input from user
- * @fd: the file discriptor
+ * @shell: shell info
  * @no_char: address of the no. of char read
+ *
  * Return: returns the string of input
  */
-char *get_input(int fd, ssize_t *no_char)
+char *get_input(shell_t *shell, ssize_t *no_char)
 {
 	char *lineptr = NULL;
 	size_t n;
 
-	*no_char = (_getline(&lineptr, &n, fd));
+	*no_char = (_getline(shell, &lineptr, &n));
+	/*no_char = getline(&lineptr, &n, stdin);*/
 	return (lineptr);
 }
