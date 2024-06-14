@@ -15,7 +15,7 @@ void command_execute(shell_t *shell, char **argv)
 	pid_t my_pid;
 
 	full_path = my_getpath(argv[0]);
-	if (full_path == NULL)
+	if (full_path == NULL || _strstr(full_path, "/") == NULL)
 		shell->error_code = handle_error(shell->argv[0], argv[0]);
 	else
 	{
