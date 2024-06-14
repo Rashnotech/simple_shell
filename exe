@@ -1,1 +1,1 @@
-shell_input="./hbtn_ls /var"
+shell_input="/bin/ls"

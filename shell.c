@@ -48,7 +48,10 @@ int continue_main(shell_t *shell, char *input, size_t no_char)
 	shell->commands = commands;
 	free(input);
 	if (commands == NULL || commands[0] == NULL || commands[0][0] == NULL)
+	{
+		free_command(shell);
 		return (0);
+	}
 
 	for (i = 0; i < shell->num_commands; i++)
 	{

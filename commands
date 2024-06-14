@@ -1,0 +1,6 @@
+"/bin/ls"
+"bin/ls
+/bin/ls
+/bin/ls" | ./hsh"
+
+shell_input="/bin/ls                                   /bin/ls                                      /bin/ls                                              /bin/ls   "
